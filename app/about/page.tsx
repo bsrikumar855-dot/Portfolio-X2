@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
 import { About } from "@/components/about/About";
 import { Signals } from "@/components/achievements/Signals";
+import { jsonLd, profilePage } from "@/lib/seo";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 
 export const metadata: Metadata = {
   title: "About",
+  alternates: { canonical: "/about" },
+  openGraph: { title: "About | Shreekumar B", url: "/about", images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Shreekumar B: AI & Frontend Developer" }], type: "profile" },
   description:
     "Shreekumar B is an AI and frontend-focused builder in Coimbatore, studying AI & Data Science and leading Team Ragnarok.",
 };
@@ -13,6 +16,7 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(profilePage) }} />
       <PageHeader index="05" label="About" title={["About"]} />
       <div className="wrap pb-24 md:pb-40">
         <About level="h2" />

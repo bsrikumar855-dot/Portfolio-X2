@@ -4,6 +4,7 @@ import { Footer } from "@/components/footer/Footer";
 import { Nav } from "@/components/navigation/Nav";
 import { AppShell } from "@/components/ui/AppShell";
 import { site } from "@/data/site";
+import { jsonLd, siteGraph } from "@/lib/seo";
 import "./globals.css";
 
 const sans = Geist({ subsets: ["latin"], variable: "--font-geist-sans", display: "swap" });
@@ -14,6 +15,9 @@ export const metadata: Metadata = {
   title: { default: site.title, template: "%s | Shreekumar B" },
   description: site.description,
   applicationName: site.name,
+  keywords: ["Shreekumar B", "AI engineer", "frontend developer", "product engineer", "Next.js", "computer vision", "OCR", "LLM", "Coimbatore"],
+  creator: site.name,
+  category: "technology",
   authors: [{ name: site.name, url: site.url }],
   alternates: { canonical: "./" },
   openGraph: {
@@ -25,21 +29,11 @@ export const metadata: Metadata = {
     locale: "en_IN",
   },
   twitter: { card: "summary_large_image", title: site.title, description: site.description },
-  robots: { index: true, follow: true },
+  robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 } },
+  formatDetection: { email: false, telephone: false },
 };
 
 export const viewport: Viewport = { themeColor: "#F2F0EB", width: "device-width", initialScale: 1 };
-
-const personLd = {
-  "@context": "https://schema.org",
-  "@type": "Person",
-  name: site.name,
-  url: site.url,
-  jobTitle: "AI Builder and Frontend Developer",
-  address: { "@type": "PostalAddress", addressLocality: "Coimbatore", addressCountry: "IN" },
-  sameAs: [site.github, site.linkedin],
-  alumniOf: { "@type": "CollegeOrUniversity", name: site.education.school },
-};
 
 // Runs before paint: skip the preloader on repeat visits and for reduced motion.
 const preloadGate = `try{if(localStorage.getItem("sk-theme")==="neon")document.documentElement.setAttribute("data-theme","neon");}catch(e){}try{if(matchMedia("(prefers-reduced-motion: reduce)").matches||sessionStorage.getItem("sk-pre"))document.documentElement.setAttribute("data-skip-preload","")}catch(e){}`;
@@ -57,7 +51,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <a href="#main" className="skip-link meta !text-bg">
           Skip to content
         </a>
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(personLd) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(siteGraph) }} />
         <AppShell>
           <Nav />
           <main id="main">{children}</main>

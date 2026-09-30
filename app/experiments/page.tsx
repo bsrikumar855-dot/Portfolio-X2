@@ -4,6 +4,8 @@ import { PageHeader } from "@/components/ui/PageHeader";
 
 export const metadata: Metadata = {
   title: "Lab",
+  alternates: { canonical: "/experiments" },
+  openGraph: { title: "Lab | Shreekumar B", url: "/experiments", images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Shreekumar B: AI & Frontend Developer" }] },
   description:
     "Experiments and side builds by Shreekumar B, including the VAYU submission for ISRO Bharat Antariksh Hackathon 2026.",
 };

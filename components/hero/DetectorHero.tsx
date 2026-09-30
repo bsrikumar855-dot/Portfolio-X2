@@ -2,7 +2,7 @@
 
 import { ArrowDown } from "lucide-react";
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { site } from "@/data/site";
 import { duration, ease, stagger } from "@/lib/motion/tokens";
 import { soft, tick } from "@/lib/sound";
@@ -52,7 +52,7 @@ function Word({ text, i, show, reduce, lit, onEnter, onLeave }: WordProps) {
         <span className="absolute -right-px -top-px size-3 border-r-2 border-t-2 border-accent" />
         <span className="absolute -bottom-px -left-px size-3 border-b-2 border-l-2 border-accent" />
         <span className="absolute -bottom-px -right-px size-3 border-b-2 border-r-2 border-accent" />
-        <span className="meta absolute -top-[1.35rem] max-md:hidden left-0 bg-accent px-1.5 py-px !text-bg">T{String(i + 1).padStart(2, "0")}</span>
+        <span data-tag={`T${String(i + 1).padStart(2, "0")}`} className="meta absolute -top-[1.35rem] max-md:hidden left-0 bg-accent px-1.5 py-px !text-bg before:content-[attr(data-tag)]" />
       </span>
     </span>
   );
@@ -128,8 +128,9 @@ export function DetectorHero() {
 
       <h1 aria-label="Building digital systems that matter" className="display flex flex-col gap-5 py-16 md:gap-8 md:py-20">
         {rows.map((row, r) => (
+          <Fragment key={r}>
+          {r > 0 && " "}
           <span
-            key={r}
             className={cn(
               "flex flex-wrap gap-x-[0.2em] text-[15cqw] leading-[0.92] md:justify-between md:flex-nowrap",
               rowSize[r],
@@ -137,9 +138,15 @@ export function DetectorHero() {
           >
             {row.map((w, j) => {
               const n = rows.slice(0, r).flat().length + j;
-              return <Word key={w} text={w} i={n} show={show} reduce={reduce} lit={active === n || found} onEnter={enter} onLeave={() => setActive(null)} />;
+              return (
+                <Fragment key={w}>
+                  {j > 0 && " "}
+                  <Word text={w} i={n} show={show} reduce={reduce} lit={active === n || found} onEnter={enter} onLeave={() => setActive(null)} />
+                </Fragment>
+              );
             })}
           </span>
+          </Fragment>
         ))}
       </h1>
     </div>

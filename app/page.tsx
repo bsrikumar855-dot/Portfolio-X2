@@ -13,6 +13,8 @@ import { projects } from "@/data/projects";
 
 const pad = "py-24 md:py-32";
 
+export const metadata = { alternates: { canonical: "/" } };
+
 export default function Home() {
   return (
     <>
