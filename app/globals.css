@@ -52,21 +52,19 @@ html[data-theme="neon"] {
   --color-muted: #647a64;
   --color-rule: #1d2a1e;
   --color-tint: #0f170f;
-  --color-dark: #39ff14;
-  --color-dark-secondary: #14350c;
-  --color-dark-rule: rgba(5, 8, 5, 0.3);
+  --color-dark: #000000;
+  --color-dark-secondary: #8fae8f;
+  --color-dark-rule: #1a2a1b;
   --color-accent: #39ff14;
-  --color-on-dark: #050805;
+  --color-on-dark: #e6f5e6;
 }
-/* On a neon band the accent would vanish, so accents turn black there. */
-html[data-theme="neon"] .dark-zone { --color-accent: #050805; }
 html[data-theme="neon"] .ruler {
   border-top-color: var(--color-rule);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='10'%3E%3Cpath d='M.5 0V10M8.5 0V4M16.5 0V4M24.5 0V4M32.5 0V4M40.5 0V7M48.5 0V4M56.5 0V4M64.5 0V4M72.5 0V4' stroke='%23647a64' fill='none'/%3E%3C/svg%3E");
 }
 html[data-theme="neon"] .dark-zone .ruler {
   border-top-color: var(--color-dark-rule);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='10'%3E%3Cpath d='M.5 0V10M8.5 0V4M16.5 0V4M24.5 0V4M32.5 0V4M40.5 0V7M48.5 0V4M56.5 0V4M64.5 0V4M72.5 0V4' stroke='%23050805' fill='none'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='10'%3E%3Cpath d='M.5 0V10M8.5 0V4M16.5 0V4M24.5 0V4M32.5 0V4M40.5 0V7M48.5 0V4M56.5 0V4M64.5 0V4M72.5 0V4' stroke='%23356b2a' fill='none'/%3E%3C/svg%3E");
 }
 /* Smooth palette swap, only while switching. */
 html.theme-anim *, html.theme-anim *::before, html.theme-anim *::after {

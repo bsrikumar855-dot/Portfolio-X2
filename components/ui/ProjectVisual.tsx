@@ -11,7 +11,10 @@ type Props = {
   tone?: "light" | "dark";
 };
 
-/** Real image when data provides one, otherwise a typographic placeholder that says so. */
+/**
+ * A real screenshot when data provides one. Otherwise a typographic cover built only from the project's
+ * own facts: its headline number or principle, its stack and its category. It does not imitate a screenshot.
+ */
 export function ProjectVisual({ project, index, className, sizes = "(min-width: 1024px) 40vw, 100vw", priority, tone = "light" }: Props) {
   if (project.image) {
     return (
@@ -21,10 +24,11 @@ export function ProjectVisual({ project, index, className, sizes = "(min-width: 
     );
   }
   const dark = tone === "dark";
+  const metric = project.metrics[0];
   return (
     <div
       role="img"
-      aria-label={`${project.title}: placeholder, screenshot to be added`}
+      aria-label={`${project.title} cover: ${metric ? `${metric.value} ${metric.label}` : (project.principle ?? project.category)}`}
       className={cn("relative h-full w-full overflow-hidden [container-type:size]", dark ? "dark-zone" : "bg-tint text-ink", className)}
     >
       <svg aria-hidden viewBox="0 0 400 300" preserveAspectRatio="xMinYMax slice" className="absolute inset-0 h-full w-full">
@@ -33,9 +37,19 @@ export function ProjectVisual({ project, index, className, sizes = "(min-width: 
         </text>
       </svg>
       <span className={cn("absolute inset-x-5 top-[38%] h-px", dark ? "bg-dark-rule" : "bg-rule")} />
-      <span className={cn("absolute inset-y-5 left-[62%] w-px", dark ? "bg-dark-rule" : "bg-rule")} />
       <span className="meta absolute left-4 top-4">{project.title}</span>
-      <span className="meta absolute bottom-4 right-4 text-right">PLACEHOLDER — add screenshot</span>
+
+      <div className="absolute inset-x-4 bottom-4 flex items-end justify-between gap-4">
+        {metric ? (
+          <p className="min-w-0">
+            <span className="numeral block text-[clamp(2rem,22cqh,6rem)] font-medium uppercase leading-[0.9]">{metric.value}</span>
+            <span className="meta mt-1 block">{metric.label}</span>
+          </p>
+        ) : (
+          <p className="max-w-[16ch] text-[clamp(1.1rem,9cqh,2rem)] font-medium leading-[1.05] tracking-[-0.02em]">{project.principle ?? project.description}</p>
+        )}
+        <p className="meta hidden text-right [@container(min-width:520px)]:block">{project.technologies.slice(0, 3).join(" · ")}</p>
+      </div>
     </div>
   );
 }

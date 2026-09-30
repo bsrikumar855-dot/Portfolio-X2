@@ -78,10 +78,10 @@ export function CaseStudy({ project }: { project: Project }) {
             </span>
           </p>
         )}
-        <dl className="mt-12 grid grid-cols-2 gap-x-6 gap-y-6 border-t rule pt-6 md:mt-16 md:grid-cols-4">
+        <dl className={`mt-12 grid grid-cols-2 gap-x-6 gap-y-6 border-t rule pt-6 md:mt-16 ${project.team ? "md:grid-cols-4" : "md:grid-cols-3"}`}>
           <Meta label="Category" value={project.category} />
           <Meta label="Role" value={project.role} />
-          <Meta label="Team" value={project.team} />
+          {project.team && <Meta label="Team" value={project.team} />}
           <Meta label="Status" value={project.status} />
         </dl>
         {project.links.length > 0 && (

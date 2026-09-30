@@ -24,7 +24,7 @@ export type Project = {
   title: string;
   category: string;
   role: string;
-  team: string;
+  team?: string;
   description: string;
   technologies: readonly string[];
   /** Path under /public. null renders the labelled placeholder. */
@@ -53,7 +53,6 @@ export const projects: readonly Project[] = [
     title: "GradeMIND",
     category: "AI / Education",
     role: "Builder",
-    team: "TODO",
     description: "Handwritten answer-sheet grading where the model reads and arithmetic decides every mark.",
     technologies: ["FastAPI", "Next.js 14", "PaddleOCR", "EasyOCR", "Tesseract", "Gemini Vision"],
     image: null,
@@ -105,7 +104,6 @@ export const projects: readonly Project[] = [
       },
       result: {
         paragraphs: ["Built for a national hackathon. Next step: CBSE-grade production."],
-        todo: "TODO — add the hackathon outcome once confirmed.",
       },
       learnings: {
         paragraphs: [
@@ -163,10 +161,18 @@ export const projects: readonly Project[] = [
           "First version: 18-point deterministic compliance rule engine on FastAPI, React, Groq/LLaMA 3.3, ChromaDB and ReportLab",
         ],
       },
-      challenges: { todo: "TODO — add challenges." },
+      challenges: {
+        bullets: [
+          "Multi-tenant isolation that does not rest on one layer: Postgres RLS plus app-layer checks.",
+          "Keeping LLM findings advisory. They never close a control without human confirmation.",
+          "Making obligations checkable: each one must cite exact source text, and code verifies the citation.",
+          "An evidence trail that can be verified offline, which is why it is hash-chained.",
+        ],
+      },
       result: {
-        paragraphs: ["Still being architected. The M0 foundation is built."],
-        todo: "TODO — add verified results.",
+        paragraphs: [
+          "The M0 foundation is built: a five-service monorepo with migrations, Valkey, OpenTelemetry and CI gates, governed by 11 ADRs. The platform itself is still being architected.",
+        ],
       },
       learnings: {
         paragraphs: ["Trust is an architecture decision. Deciding where the model may speak, and where it may not, comes first."],
@@ -178,7 +184,6 @@ export const projects: readonly Project[] = [
     title: "AHAL AI",
     category: "AI / Developer Tools",
     role: "Designer",
-    team: "TODO",
     description: "An engineering risk intelligence platform that gates every LLM-proposed change behind deterministic AST verification.",
     technologies: ["Multi-agent", "Tree-sitter", "GitHub webhooks"],
     image: null,
@@ -218,7 +223,13 @@ export const projects: readonly Project[] = [
           "Technical whitepaper, benchmarked against a competing multi-agent code-review system",
         ],
       },
-      challenges: { todo: "TODO — add challenges." },
+      challenges: {
+        bullets: [
+          "Letting an LLM propose changes without letting it approve them: every proposal goes through deterministic Tree-sitter and AST verification.",
+          "Ingesting a whole repository across multiple agents, then reacting to GitHub webhooks as changes arrive.",
+          "Showing the design holds up by benchmarking it against a competing multi-agent code-review system.",
+        ],
+      },
       result: {
         paragraphs: ["Designed the platform and authored the technical whitepaper, benchmarking the design against a competing multi-agent code-review system."],
       },
@@ -232,7 +243,6 @@ export const projects: readonly Project[] = [
     title: "DriftCheck",
     category: "Developer Tools / CLI",
     role: "Creator",
-    team: "TODO",
     description: "An open-source CLI that verifies a live deployment actually works, catching failures a green build hides.",
     technologies: ["TypeScript", "Node.js", "npm", "GitHub Actions"],
     image: null,
@@ -284,7 +294,6 @@ export const projects: readonly Project[] = [
     title: "Minchal",
     category: "AI / Consumer",
     role: "Team Lead",
-    team: "TODO",
     description: "Photo-first electricity bill attribution: which household appliance is driving the bill.",
     technologies: ["Gemini"],
     image: null,
@@ -320,7 +329,12 @@ export const projects: readonly Project[] = [
           "Input from photographs only: a bill and appliance nameplates",
         ],
       },
-      challenges: { todo: "TODO — add challenges." },
+      challenges: {
+        bullets: [
+          "Attributing a bill to one appliance from photographs alone: a bill and appliance nameplates are the only inputs.",
+          "Keeping the model out of the arithmetic. Gemini reads and explains, deterministic code calculates.",
+        ],
+      },
       result: { paragraphs: ["National finalist at HackXelerate 26'."] },
       learnings: {
         paragraphs: ["Let the model read and explain. Keep the numbers in code."],

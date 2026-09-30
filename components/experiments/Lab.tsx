@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils/cn";
 const span = { wide: "md:col-span-7", tall: "md:col-span-5", square: "md:col-span-5" } as const;
 const height = { wide: "md:min-h-[20rem]", tall: "md:min-h-[26rem]", square: "md:min-h-[20rem]" } as const;
 
-/** Irregular hairline grid. Only real experiments, everything else is an explicit TODO. */
+/** Irregular hairline grid. Only real experiments. */
 export function Lab({ level: H = "h3" }: { level?: "h2" | "h3" }) {
   return (
     <ul className="grid grid-cols-1 gap-px border rule bg-rule md:grid-cols-12">

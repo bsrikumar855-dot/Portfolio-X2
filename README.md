@@ -21,8 +21,7 @@ npm run lint && npm run typecheck && npm run build
 ## Open TODOs (all visible on the site)
 
 - `data/site.ts`: optional `portrait` file in `public/images`.
-- `data/projects.ts`: screenshots (`image: "/projects/<file>"`), `team` for GradeMIND, AHAL AI, DriftCheck and Minchal, project links (only PRYSM and DriftCheck have one), challenges for PRYSM, AHAL AI and Minchal, results for PRYSM, GradeMIND outcome.
-- `data/experiments.ts`: LAB 003 and LAB 004.
+- `data/projects.ts`: optional real screenshots (`image: "/projects/<file>"`; covers are shown until then), the GradeMIND hackathon outcome, project links (only PRYSM and DriftCheck have one), and `team` names where you want them shown.
 - `NEXT_PUBLIC_SITE_URL`: final domain (defaults to the existing portfolio URL).
 
 ## Motion
