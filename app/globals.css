@@ -1,0 +1,166 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #f2f0eb;
+  --color-ink: #111111;
+  --color-secondary: #5f5c57;
+  --color-muted: #8b8881;
+  --color-rule: #d8d4cc;
+  --color-dark: #151515;
+  --color-dark-secondary: #a8a49c;
+  --color-dark-rule: #33312f;
+  --color-tint: #e8e4dc;
+  --color-accent: #8b2635;
+  --color-on-dark: #f2f0eb;
+
+  --font-sans: var(--font-geist-sans), Inter, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), "IBM Plex Mono", ui-monospace, monospace;
+
+  --breakpoint-3xl: 1600px;
+}
+
+:root {
+  --gutter: 1.25rem;
+  --nav-h: 4rem;
+  --max: 1480px;
+}
+@media (min-width: 768px) {
+  :root { --gutter: 2.5rem; --nav-h: 4.5rem; }
+}
+@media (min-width: 1280px) {
+  :root { --gutter: 3.5rem; }
+}
+
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+::selection { background: var(--color-accent); color: var(--color-bg); }
+
+/* Neon theme: near-black page, neon green accent. Same tokens, different values. */
+html[data-theme="neon"] {
+  --color-bg: #070a07;
+  --color-ink: #e6f5e6;
+  --color-secondary: #96b096;
+  --color-muted: #647a64;
+  --color-rule: #1d2a1e;
+  --color-tint: #0f170f;
+  --color-dark: #39ff14;
+  --color-dark-secondary: #14350c;
+  --color-dark-rule: rgba(5, 8, 5, 0.3);
+  --color-accent: #39ff14;
+  --color-on-dark: #050805;
+}
+/* On a neon band the accent would vanish, so accents turn black there. */
+html[data-theme="neon"] .dark-zone { --color-accent: #050805; }
+html[data-theme="neon"] .ruler {
+  border-top-color: var(--color-rule);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='10'%3E%3Cpath d='M.5 0V10M8.5 0V4M16.5 0V4M24.5 0V4M32.5 0V4M40.5 0V7M48.5 0V4M56.5 0V4M64.5 0V4M72.5 0V4' stroke='%23647a64' fill='none'/%3E%3C/svg%3E");
+}
+html[data-theme="neon"] .dark-zone .ruler {
+  border-top-color: var(--color-dark-rule);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='10'%3E%3Cpath d='M.5 0V10M8.5 0V4M16.5 0V4M24.5 0V4M32.5 0V4M40.5 0V7M48.5 0V4M56.5 0V4M64.5 0V4M72.5 0V4' stroke='%23050805' fill='none'/%3E%3C/svg%3E");
+}
+/* Smooth palette swap, only while switching. */
+html.theme-anim *, html.theme-anim *::before, html.theme-anim *::after {
+  transition: background-color 0.45s ease, color 0.45s ease, border-color 0.45s ease, fill 0.45s ease, stroke 0.45s ease !important;
+}
+
+/* Layout */
+.wrap { width: 100%; max-width: var(--max); margin-inline: auto; padding-inline: var(--gutter); }
+.grid12 { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 1rem; }
+@media (min-width: 768px) { .grid12 { column-gap: 1.5rem; } }
+section[id], [data-anchor] { scroll-margin-top: calc(var(--nav-h) - 1px); }
+
+/* Type */
+.meta {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  line-height: 1.4;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-secondary);
+}
+.dark-zone .meta { color: var(--color-dark-secondary); }
+.display {
+  font-weight: 500;
+  line-height: 0.9;
+  letter-spacing: -0.045em;
+  text-transform: uppercase;
+}
+.h-page { font-size: clamp(3rem, 9.5vw, 9rem); }
+.h-section { font-size: clamp(2.25rem, 6vw, 5.5rem); }
+.lead { font-size: clamp(1.25rem, 2.1vw, 1.75rem); line-height: 1.35; letter-spacing: -0.015em; }
+.numeral { font-variant-numeric: tabular-nums; font-feature-settings: "tnum"; letter-spacing: -0.04em; }
+
+/* Ruler: measuring-tape ticks under a hairline. Used on section headers and the hero. */
+.ruler {
+  height: 10px;
+  border-top: 1px solid var(--color-rule);
+  background-repeat: repeat-x;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='10'%3E%3Cpath d='M.5 0V10M8.5 0V4M16.5 0V4M24.5 0V4M32.5 0V4M40.5 0V7M48.5 0V4M56.5 0V4M64.5 0V4M72.5 0V4' stroke='%238b8881' fill='none'/%3E%3C/svg%3E");
+}
+.dark-zone .ruler {
+  border-top-color: var(--color-dark-rule);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='10'%3E%3Cpath d='M.5 0V10M8.5 0V4M16.5 0V4M24.5 0V4M32.5 0V4M40.5 0V7M48.5 0V4M56.5 0V4M64.5 0V4M72.5 0V4' stroke='%23625f5a' fill='none'/%3E%3C/svg%3E");
+}
+
+/* Zones */
+.dark-zone {
+  /* Inside a dark zone, "bg" means the light text colour, so text-bg keeps working in both themes. */
+  --color-bg: var(--color-on-dark);
+  background: var(--color-dark);
+  color: var(--color-bg);
+}
+.dark-zone .rule, .dark-zone.rule { border-color: var(--color-dark-rule); }
+.rule { border-color: var(--color-rule); }
+
+/* Links */
+.link-u { position: relative; display: inline-block; }
+.link-u::after {
+  content: "";
+  position: absolute; left: 0; right: 0; bottom: -2px; height: 1px;
+  background: currentColor;
+  transform: scaleX(0); transform-origin: right;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.link-u:hover::after, .link-u[aria-current="page"]::after, .link-u[data-active="true"]::after {
+  transform: scaleX(1); transform-origin: left;
+}
+.link-u[data-active="true"]::after, .link-u[aria-current="page"]::after { background: var(--color-accent); }
+.dark-zone .link-u[data-active="true"]::after { background: var(--color-bg); }
+
+/* Focus */
+:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 4px; border-radius: 1px; }
+.dark-zone :focus-visible, .dark-zone:focus-visible { outline-color: var(--color-bg); }
+
+.skip-link {
+  position: fixed; left: var(--gutter); top: 0.75rem; z-index: 200;
+  background: var(--color-ink); color: var(--color-bg); padding: 0.6rem 1rem;
+  transform: translateY(-200%);
+}
+.skip-link:focus { transform: none; }
+
+/* Cursor */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  html.has-cursor, html.has-cursor a, html.has-cursor button, html.has-cursor [data-cursor] { cursor: none; }
+}
+
+/* Preloader is skipped for repeat visits and reduced motion (set by inline head script). */
+html[data-skip-preload] .preloader { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
