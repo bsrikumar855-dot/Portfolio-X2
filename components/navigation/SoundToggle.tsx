@@ -1,24 +1,23 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
-import { getSound, getSoundServer, setSound, subscribeSound } from "@/lib/sound";
+import { Volume2, VolumeX } from "lucide-react";
+import { useSound } from "@/components/ui/SoundProvider";
 
 /** Opt-in sound switch. Everything is synthesized, nothing downloads. */
 export function SoundToggle({ className }: { className?: string }) {
-  const on = useSyncExternalStore(subscribeSound, getSound, getSoundServer);
+  const { enabled, toggle } = useSound();
+  const Icon = enabled ? Volume2 : VolumeX;
   return (
     <button
       type="button"
-      aria-pressed={on}
-      onClick={() => setSound(!on)}
-      className={`meta inline-flex items-center gap-2 !text-current ${className ?? ""}`}
+      aria-pressed={enabled}
+      onClick={toggle}
+      data-sound="none"
+      data-sound-hover="none"
+      className={`meta caps inline-flex min-h-11 min-w-11 items-center gap-2 whitespace-nowrap !text-current ${className ?? ""}`}
     >
-      <span aria-hidden className="flex h-3 items-end gap-[2px]">
-        {[5, 9, 6, 11].map((h, i) => (
-          <span key={i} className="w-[2px] bg-current transition-opacity" style={{ height: on ? h : 3, opacity: on ? 1 : 0.5 }} />
-        ))}
-      </span>
-      SOUND {on ? "ON" : "OFF"}
+      <Icon aria-hidden size={14} />
+      Sound {enabled ? "on" : "off"}
     </button>
   );
 }

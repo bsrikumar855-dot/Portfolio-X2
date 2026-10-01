@@ -5,7 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { nav } from "@/data/site";
 import { projects } from "@/data/projects";
-import { paper } from "@/lib/sound";
+import { useSound } from "@/components/ui/SoundProvider";
 import { duration, ease } from "@/lib/motion/tokens";
 
 type Phase = "idle" | "cover" | "reveal";
@@ -30,7 +30,7 @@ const labelFor = (href: string): { index: string; title: string } => {
 const variants: Variants = {
   idle: { clipPath: "inset(100% 0% 0% 0%)", transition: { duration: 0 } },
   cover: { clipPath: "inset(0% 0% 0% 0%)", transition: { duration: duration.transition, ease: ease.inOut } },
-  reveal: { clipPath: "inset(0% 0% 100% 0%)", transition: { duration: duration.transition + 0.05, ease: ease.inOut } },
+  reveal: { clipPath: "inset(0% 0% 100% 0%)", transition: { duration: duration.transition + 0.04, ease: ease.inOut } },
 };
 
 /**
@@ -41,6 +41,7 @@ export function PageTransition({ children }: { children: ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
   const reduce = useReducedMotion();
+  const { play } = useSound();
   const [phase, setPhase] = useState<Phase>("idle");
   const [label, setLabel] = useState({ index: "", title: "" });
   const target = useRef<string | null>(null);
@@ -53,12 +54,12 @@ export function PageTransition({ children }: { children: ReactNode }) {
         router.push(href);
         return;
       }
-      paper();
+      play("whoosh");
       target.current = href;
       setLabel(labelFor(href));
       setPhase("cover");
     },
-    [reduce, phase, pathname, router],
+    [reduce, phase, pathname, router, play],
   );
 
   // New route is mounted: lift the curtain.
@@ -97,7 +98,7 @@ export function PageTransition({ children }: { children: ReactNode }) {
         onAnimationComplete={onComplete}
       >
         <span className="meta">{label.index ? `Project ${label.index}` : "Shreekumar B"}</span>
-        <span className="display text-[clamp(3rem,13vw,11rem)]">{label.title}</span>
+        <span className="display h-hero">{label.title}</span>
       </motion.div>
     </TransitionContext.Provider>
   );
