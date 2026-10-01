@@ -20,13 +20,13 @@ export function ImageReveal({ children, className, delay = 0, from = "bottom" }:
       className={cn("overflow-hidden", className)}
       initial={reduce ? false : { clipPath: closed[from] }}
       animate={{ clipPath: show ? "inset(0% 0% 0% 0%)" : closed[from] }}
-      transition={{ duration: duration.dramatic, ease: ease.inOut, delay }}
+      transition={{ duration: duration.reveal, ease: ease.inOut, delay }}
     >
       <motion.div
         className="h-full w-full"
         initial={reduce ? false : { scale: 1.12 }}
         animate={{ scale: show ? 1 : 1.12 }}
-        transition={{ duration: duration.dramatic * 1.3, ease: ease.out, delay }}
+        transition={{ duration: duration.reveal * 1.2, ease: ease.out, delay }}
       >
         {children}
       </motion.div>

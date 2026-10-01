@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { site } from "@/data/site";
 import { ease } from "@/lib/motion/tokens";
+import { titleCase } from "@/lib/utils/case";
 
 const COUNT_MS = 600;
 
@@ -52,10 +53,10 @@ export function Preloader({ onDone }: { onDone: () => void }) {
         }
       }}
     >
-      <span className="meta">{site.disciplines}</span>
+      <span className="meta">{titleCase(site.disciplines)}</span>
       <div className="flex items-end justify-between gap-6">
-        <span className="display text-[clamp(2.25rem,8vw,7rem)]">{site.wordmark}</span>
-        <span className="numeral text-[clamp(2.25rem,8vw,7rem)] font-medium leading-none tabular-nums">
+        <span className="display text-hero">{site.wordmark}</span>
+        <span className="display numeral text-hero">
           {String(pct).padStart(3, "0")}
         </span>
       </div>

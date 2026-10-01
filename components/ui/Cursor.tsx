@@ -62,7 +62,7 @@ export function Cursor() {
           mixBlendMode: label ? "normal" : "difference",
         }}
       >
-        {label && <span className="meta !text-bg">{label}</span>}
+        {label && <span className="meta caps !text-bg">{label}</span>}
       </div>
     </div>
   );

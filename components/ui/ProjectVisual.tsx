@@ -32,7 +32,7 @@ export function ProjectVisual({ project, index, className, sizes = "(min-width: 
       className={cn("relative h-full w-full overflow-hidden [container-type:size]", dark ? "dark-zone" : "bg-tint text-ink", className)}
     >
       <svg aria-hidden viewBox="0 0 400 300" preserveAspectRatio="xMinYMax slice" className="absolute inset-0 h-full w-full">
-        <text x="-6" y="318" fontSize="250" fontWeight="500" letterSpacing="-12" className={dark ? "fill-dark-rule" : "fill-rule"} fontFamily="var(--font-geist-sans), sans-serif">
+        <text x="-6" y="318" fontSize="250" fontWeight="500" letterSpacing="-12" className={dark ? "fill-dark-rule" : "fill-rule"} fontFamily="var(--font-fraunces), sans-serif">
           {String(index + 1).padStart(2, "0")}
         </text>
       </svg>
@@ -42,11 +42,11 @@ export function ProjectVisual({ project, index, className, sizes = "(min-width: 
       <div className="absolute inset-x-4 bottom-4 flex items-end justify-between gap-4">
         {metric ? (
           <p className="min-w-0">
-            <span className="numeral block text-[clamp(2rem,22cqh,6rem)] font-medium uppercase leading-[0.9]">{metric.value}</span>
+            <span className="display numeral block text-[clamp(2rem,22cqh,6rem)] leading-[0.95]">{metric.value}</span>
             <span className="meta mt-1 block">{metric.label}</span>
           </p>
         ) : (
-          <p className="max-w-[16ch] text-[clamp(1.1rem,9cqh,2rem)] font-medium leading-[1.05] tracking-[-0.02em]">{project.principle ?? project.description}</p>
+          <p className="display max-w-[18ch] text-[clamp(1.1rem,9cqh,2rem)] leading-[1.1]">{project.principle ?? project.description}</p>
         )}
         <p className="meta hidden text-right [@container(min-width:520px)]:block">{project.technologies.slice(0, 3).join(" · ")}</p>
       </div>

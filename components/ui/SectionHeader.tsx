@@ -14,19 +14,14 @@ type Props = {
 export function SectionHeader({ index, label, title, aside, level = "h2", className }: Props) {
   return (
     <div className={className}>
-      <div aria-hidden className="ruler mb-4" />
+      <div aria-hidden className="ruler mb-6" />
       <div className="meta flex items-center justify-between gap-6">
         <span>
           <span className="numeral">{index}</span> / {label}
         </span>
         {aside}
       </div>
-      <RevealText
-        as={level}
-        lines={title}
-        className="display h-section mt-8 md:mt-14"
-        immediate={level === "h1"}
-      />
+      <RevealText as={level} text={title.join(" ")} className="display h-section mt-6 md:mt-10" immediate={level === "h1"} />
     </div>
   );
 }

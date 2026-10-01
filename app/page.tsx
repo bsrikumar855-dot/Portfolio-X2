@@ -11,7 +11,7 @@ import { ArrowLink } from "@/components/ui/ArrowLink";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { projects } from "@/data/projects";
 
-const pad = "py-24 md:py-32";
+const pad = "py-24 md:py-40";
 
 export const metadata = { alternates: { canonical: "/" } };
 
@@ -23,8 +23,8 @@ export default function Home() {
 
       <section id="work" className={pad}>
         <div className="wrap">
-          <SectionHeader index="02" label="Selected Work" title={["Selected", "Work"]} aside={<span className="numeral">05 PROJECTS</span>} />
-          <p className="lead mt-10 max-w-[34ch] text-secondary md:ml-[calc(100%/12*4)] md:mt-14">
+          <SectionHeader index="02" label="Selected Work" title={["Selected", "Work"]} aside={<span className="numeral">05 projects</span>} />
+          <p className="lead mt-8 max-w-[36ch] text-prose md:ml-[calc(100%/12*4)] md:mt-10">
             Five projects, one through-line: a deterministic core with an LLM language layer.
           </p>
         </div>
@@ -32,7 +32,7 @@ export default function Home() {
           <ProjectList items={projects} />
         </div>
         <div className="wrap mt-10 flex justify-end">
-          <ArrowLink href="/work">ALL PROJECTS</ArrowLink>
+          <ArrowLink href="/work">All projects</ArrowLink>
         </div>
       </section>
 
@@ -46,7 +46,7 @@ export default function Home() {
           </div>
         </div>
         <div className="wrap mt-24 md:mt-40">
-          <h3 className="meta mb-8 !text-ink">Stack</h3>
+          <h3 className="meta mb-8 !text-ink caps">Stack</h3>
           <Stack />
         </div>
       </section>
@@ -71,7 +71,7 @@ export default function Home() {
 
       <section id="lab" className="pb-24 md:pb-40">
         <div className="wrap">
-          <SectionHeader index="06" label="Lab" title={["The Lab"]} aside={<ArrowLink href="/experiments" className="!pb-0.5">ALL EXPERIMENTS</ArrowLink>} />
+          <SectionHeader index="06" label="Lab" title={["The Lab"]} aside={<ArrowLink href="/experiments">All experiments</ArrowLink>} />
           <div className="mt-12 md:mt-20">
             <Lab />
           </div>

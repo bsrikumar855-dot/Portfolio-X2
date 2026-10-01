@@ -2,8 +2,6 @@
 
 import { motion } from "framer-motion";
 import { penPaths as paths, type PenVariant } from "./penPaths";
-import { useEffect } from "react";
-import { pen } from "@/lib/sound";
 import { useReveal } from "@/lib/motion/useReveal";
 import { cn } from "@/lib/utils/cn";
 
@@ -19,11 +17,6 @@ type Props = {
 export function PenMark({ variant, className, delay = 0, width = 2.5 }: Props) {
   const { ref, show, reduce } = useReveal<HTMLSpanElement>();
   const p = paths[variant];
-  useEffect(() => {
-    if (!show || reduce) return;
-    const id = window.setTimeout(pen, delay * 1000);
-    return () => window.clearTimeout(id);
-  }, [show, reduce, delay]);
   return (
     <motion.span
       ref={ref}

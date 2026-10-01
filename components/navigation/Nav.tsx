@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { TransitionLink } from "@/components/motion/TransitionLink";
 import { nav, site } from "@/data/site";
 import { cn } from "@/lib/utils/cn";
+import { sentenceCase } from "@/lib/utils/case";
 import { MobileMenu } from "./MobileMenu";
 import { SoundToggle } from "./SoundToggle";
 import { ThemeToggle } from "./ThemeToggle";
@@ -67,13 +68,13 @@ export function Nav() {
         )}
       >
         <div className="wrap flex h-[var(--nav-h)] items-center justify-between gap-6">
-          <TransitionLink href="/" onClick={toTop} className="font-medium tracking-[-0.02em]" aria-label={`${site.wordmark} home`}>
+          <TransitionLink href="/" onClick={toTop} className="display text-title" aria-label={`${site.wordmark} home`}>
             {site.wordmark}
           </TransitionLink>
 
-          <nav aria-label="Primary" className="hidden items-center gap-8 md:flex">
+          <nav aria-label="Primary" className="hidden items-center gap-8 lg:flex">
             {nav.map((n) => {
-              const cls = "meta link-u !text-current";
+              const cls = "meta caps link-u py-1 !text-current";
               const active = activeKey === n.key;
               return isHome ? (
                 <a key={n.key} href={`#${n.section}`} className={cls} data-active={active} aria-current={active ? "location" : undefined}>
@@ -88,16 +89,21 @@ export function Nav() {
           </nav>
 
           <div className="flex items-center gap-6">
-            <ThemeToggle className="hidden md:inline-flex" />
-            <SoundToggle className="hidden lg:inline-flex" />
+            <div className="hidden lg:block">
+              <ThemeToggle />
+            </div>
+            <div className="hidden lg:block">
+              <SoundToggle />
+            </div>
             <span className="meta hidden items-center gap-2 !text-current xl:flex">
               <StatusDot />
-              {site.availability}
+              {sentenceCase(site.availability)}
             </span>
             <button
               ref={menuBtn}
               type="button"
-              className="meta -mr-2 p-2 !text-current md:hidden"
+              data-sound="open"
+              className="meta caps -mr-2 inline-flex min-h-11 min-w-11 items-center justify-center !text-current lg:hidden"
               aria-expanded={open}
               aria-controls="mobile-menu"
               onClick={() => setOpen(true)}

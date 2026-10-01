@@ -5,9 +5,12 @@ import { site } from "@/data/site";
 
 const fmt = new Intl.DateTimeFormat("en-GB", { timeZone: site.timezone, hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false });
 
-/** Live IST clock. Renders a stable placeholder until mounted, so there is no hydration mismatch. */
+/**
+ * Live IST clock. The server renders a real time (never "--:--:--"); the client text is allowed to differ
+ * on hydration, then the interval takes over on mount.
+ */
 export function ISTClock() {
-  const [now, setNow] = useState<string | null>(null);
+  const [now, setNow] = useState(() => fmt.format(new Date()));
   useEffect(() => {
     const tick = () => setNow(fmt.format(new Date()));
     tick();
@@ -15,8 +18,8 @@ export function ISTClock() {
     return () => window.clearInterval(id);
   }, []);
   return (
-    <span className="numeral">
-      {now ?? "--:--:--"} IST
+    <span className="numeral" suppressHydrationWarning>
+      {now} IST
     </span>
   );
 }

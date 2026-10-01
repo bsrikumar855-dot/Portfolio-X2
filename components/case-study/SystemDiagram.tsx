@@ -25,8 +25,8 @@ export function SystemDiagram({ caption, steps }: Props) {
             >
               <span className={cn("meta numeral pt-0.5", s.kind === "core" && "!text-bg/70")}>{String(i + 1).padStart(2, "0")}</span>
               <div>
-                <p className="font-medium tracking-[-0.01em]">{s.label}</p>
-                {s.note && <p className={cn("mt-1 text-[0.95rem]", s.kind === "core" ? "text-bg/75" : "text-secondary")}>{s.note}</p>}
+                <p className="display text-title">{s.label}</p>
+                {s.note && <p className={cn("mt-1 text-small", s.kind === "core" ? "text-bg/80" : "text-secondary")}>{s.note}</p>}
               </div>
             </div>
           </li>
