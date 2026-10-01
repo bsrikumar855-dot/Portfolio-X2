@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist_Mono, Inter, Instrument_Sans } from "next/font/google";
 import { Footer } from "@/components/footer/Footer";
 import { Nav } from "@/components/navigation/Nav";
 import { AppShell } from "@/components/ui/AppShell";
@@ -7,8 +7,9 @@ import { site } from "@/data/site";
 import { jsonLd, siteGraph } from "@/lib/seo";
 import "./globals.css";
 
-const sans = Geist({ subsets: ["latin"], variable: "--font-geist-sans", display: "swap" });
-const mono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono", display: "swap" });
+const display = Instrument_Sans({ subsets: ["latin"], weight: ["500", "600"], variable: "--font-instrument", display: "swap" });
+const body = Inter({ subsets: ["latin"], weight: ["400", "500"], variable: "--font-inter", display: "swap" });
+const mono = Geist_Mono({ subsets: ["latin"], weight: ["400"], variable: "--font-geist-mono", display: "swap" });
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -40,7 +41,7 @@ const preloadGate = `try{if(localStorage.getItem("sk-theme")==="neon")document.d
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${sans.variable} ${mono.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${display.variable} ${body.variable} ${mono.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: preloadGate }} />
         <noscript>

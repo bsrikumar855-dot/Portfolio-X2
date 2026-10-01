@@ -13,8 +13,8 @@ export function PageHeader({ index, label, title, intro }: Props) {
         </span>
         <span className="hidden sm:inline">{site.location}</span>
       </p>
-      <RevealText as="h1" lines={title} className="display h-page mt-8 md:mt-12" immediate />
-      {intro && <p className="lead mt-10 max-w-[38ch] text-secondary md:mt-14">{intro}</p>}
+      <RevealText as="h1" text={title.join(" ")} className="display h-page mt-6 md:mt-10" immediate />
+      {intro && <p className="lead mt-8 max-w-[40ch] text-prose md:mt-10">{intro}</p>}
     </header>
   );
 }

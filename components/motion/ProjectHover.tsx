@@ -1,8 +1,5 @@
-"use client";
-
 import type { ReactNode } from "react";
 import { TransitionLink } from "./TransitionLink";
-import { soft } from "@/lib/sound";
 import { cn } from "@/lib/utils/cn";
 
 type Props = { href: string; cursor?: string; children: ReactNode; className?: string };
@@ -13,7 +10,12 @@ type Props = { href: string; cursor?: string; children: ReactNode; className?: s
  */
 export function ProjectHover({ href, cursor = "VIEW", children, className }: Props) {
   return (
-    <TransitionLink href={href} onMouseEnter={soft} data-cursor={cursor} className={cn("group relative block", className)}>
+    <TransitionLink
+      href={href}
+      data-sound-hover="reveal"
+      data-cursor={cursor}
+      className={cn("group relative block", className)}
+    >
       {children}
     </TransitionLink>
   );

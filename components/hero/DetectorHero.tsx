@@ -5,13 +5,13 @@ import { motion } from "framer-motion";
 import { Fragment, useEffect, useState } from "react";
 import { site } from "@/data/site";
 import { duration, ease, stagger } from "@/lib/motion/tokens";
-import { soft, tick } from "@/lib/sound";
+import { titleCase } from "@/lib/utils/case";
 import { useReveal } from "@/lib/motion/useReveal";
 import { cn } from "@/lib/utils/cn";
 
-const rows = [["BUILDING", "DIGITAL"], ["SYSTEMS", "THAT", "MATTER"]] as const;
+const rows = [["Building", "digital"], ["systems", "that", "matter"]] as const;
 const words: readonly string[] = rows.flat();
-const rowSize = ["md:text-[11.5cqw]", "md:text-[8.9cqw]"] as const;
+const ACCENT = "matter";
 
 const corner = "pointer-events-none absolute size-7 border-ink";
 
@@ -26,6 +26,7 @@ type WordProps = {
 };
 
 function Word({ text, i, show, reduce, lit, onEnter, onLeave }: WordProps) {
+  const accent = text === ACCENT;
   return (
     <span className="relative inline-block" onPointerEnter={() => onEnter(i)} onPointerLeave={onLeave}>
       <span className="inline-block overflow-hidden py-[0.06em] -my-[0.06em] align-bottom">
@@ -34,11 +35,21 @@ function Word({ text, i, show, reduce, lit, onEnter, onLeave }: WordProps) {
           className="inline-block will-change-transform"
           initial={reduce ? false : { y: "115%" }}
           animate={show ? { y: "0%" } : { y: "115%" }}
-          transition={{ duration: duration.dramatic, ease: ease.out, delay: 0.1 + i * stagger.text }}
+          transition={{ duration: duration.reveal, ease: ease.out, delay: 0.1 + i * stagger.text }}
         >
           {text}
         </motion.span>
       </span>
+      {/* Marker: one slow accent underline under the accent word. */}
+      {accent && (
+        <motion.span
+          aria-hidden
+          className="pointer-events-none absolute -bottom-[0.04em] left-0 h-[3px] w-full origin-left bg-accent"
+          initial={reduce ? false : { scaleX: 0 }}
+          animate={{ scaleX: show || reduce ? 1 : 0 }}
+          transition={{ duration: 0.9, ease: ease.out, delay: 1 }}
+        />
+      )}
       {/* Detection box: corner brackets plus a token tag. */}
       <span
         aria-hidden
@@ -69,10 +80,7 @@ export function DetectorHero() {
 
   useEffect(() => {
     if (!show || reduce) return;
-    const a = window.setTimeout(() => {
-      setFound(true);
-      tick();
-    }, 1500);
+    const a = window.setTimeout(() => setFound(true), 1500);
     const b = window.setTimeout(() => setFound(false), 3400);
     return () => {
       window.clearTimeout(a);
@@ -80,14 +88,11 @@ export function DetectorHero() {
     };
   }, [show, reduce]);
 
-  const enter = (i: number) => {
-    setActive(i);
-    soft();
-  };
+  const enter = (i: number) => setActive(i);
   const word = active === null ? null : words[active];
 
   return (
-    <div ref={ref} className="relative flex flex-1 flex-col justify-center [container-type:inline-size]">
+    <div ref={ref} className="relative flex flex-1 flex-col justify-center">
       {/* Viewfinder corners */}
       <span aria-hidden className={cn(corner, "left-0 top-0 border-l-2 border-t-2")} />
       <span aria-hidden className={cn(corner, "right-0 top-0 border-r-2 border-t-2")} />
@@ -95,22 +100,22 @@ export function DetectorHero() {
       <span aria-hidden className={cn(corner, "bottom-0 right-0 border-b-2 border-r-2")} />
 
       {/* HUD */}
-      <p className="meta absolute left-0 top-0 max-w-[calc(100%-5rem)] pl-11 pt-1.5">{site.disciplines}</p>
-      <p className="meta absolute right-0 top-0 hidden pr-11 pt-1.5 md:block">{site.location.toUpperCase()}</p>
+      <p className="meta absolute left-0 top-0 max-w-[calc(100%-5rem)] pl-11 pt-1.5">{titleCase(site.disciplines)}</p>
+      <p className="meta absolute right-0 top-0 hidden pr-11 pt-1.5 md:block">{site.location}</p>
       <p aria-hidden className="meta absolute bottom-0 left-0 max-w-[calc(100%-5rem)] pb-1.5 pl-11 !text-ink">
         {word ? (
           <>
-            <span className="text-accent">READ</span> &ldquo;{word}&rdquo; <span className="text-accent">▸</span> {word.length} CHARS{" "}
+            <span className="text-accent">Read</span> &ldquo;{word}&rdquo; <span className="text-accent">▸</span> {word.length} chars{" "}
             <span className="text-accent">✓</span>
           </>
         ) : (
           <>
-            <span className="text-accent">MODEL READS</span> ▸ <span className="text-accent">ARITHMETIC DECIDES</span>
+            <span className="text-accent">Model reads</span> ▸ <span className="text-accent">Arithmetic decides</span>
           </>
         )}
       </p>
       <a href="#work" className="meta group absolute bottom-0 right-0 hidden items-center gap-3 pb-1.5 pr-11 !text-ink md:flex">
-        SCROLL TO EXPLORE
+        Scroll to explore
         <ArrowDown aria-hidden size={14} className="transition-transform duration-300 group-hover:translate-y-1" />
         <span className="numeral">01 / 07</span>
       </a>
@@ -126,28 +131,25 @@ export function DetectorHero() {
         />
       )}
 
-      <h1 aria-label="Building digital systems that matter" className="display flex flex-col gap-5 py-16 md:gap-8 md:py-20">
-        {rows.map((row, r) => (
-          <Fragment key={r}>
-          {r > 0 && " "}
-          <span
-            className={cn(
-              "flex flex-wrap gap-x-[0.2em] text-[15cqw] leading-[0.92] md:justify-between md:flex-nowrap",
-              rowSize[r],
-            )}
-          >
-            {row.map((w, j) => {
-              const n = rows.slice(0, r).flat().length + j;
-              return (
-                <Fragment key={w}>
-                  {j > 0 && " "}
-                  <Word text={w} i={n} show={show} reduce={reduce} lit={active === n || found} onEnter={enter} onLeave={() => setActive(null)} />
-                </Fragment>
-              );
-            })}
-          </span>
-          </Fragment>
-        ))}
+      <h1 aria-label="Building digital systems that matter" className="display h-hero flex flex-col gap-1 py-16 md:gap-2 md:py-24">
+        <span aria-hidden="true" className="contents">
+          {rows.map((row, r) => (
+            <Fragment key={r}>
+              {r > 0 && " "}
+              <span className="block">
+              {row.map((w, j) => {
+                const n = rows.slice(0, r).flat().length + j;
+                return (
+                  <Fragment key={w}>
+                    {j > 0 && " "}
+                    <Word text={w} i={n} show={show} reduce={reduce} lit={active === n || found} onEnter={enter} onLeave={() => setActive(null)} />
+                  </Fragment>
+                );
+              })}
+              </span>
+            </Fragment>
+          ))}
+        </span>
       </h1>
     </div>
   );

@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { SplitText } from "@/components/motion/SplitText";
 import { StaggerText } from "@/components/motion/StaggerText";
 import { site } from "@/data/site";
 
@@ -26,18 +25,18 @@ export function About({ level: H = "h3" }: { level?: "h2" | "h3" }) {
   return (
     <div>
       <div className="grid12 gap-y-10">
-        <SplitText
-          as="p"
-          className="col-span-12 text-[clamp(1.75rem,4vw,3.5rem)] font-medium leading-[1.08] tracking-[-0.03em] lg:col-span-9"
-          text="I'm Shreekumar, an AI and frontend-focused builder interested in turning difficult technical problems into products people can actually use."
-        />
+        <StaggerText className="col-span-12 lg:col-span-9">
+          <p className="display text-statement">
+            I&apos;m Shreekumar, an AI and frontend-focused builder interested in turning difficult technical problems into products people can actually use.
+          </p>
+        </StaggerText>
         <div className="col-span-12 lg:col-span-3 lg:col-start-10 lg:row-start-1">
           <div className="relative aspect-[4/5] w-2/3 bg-tint lg:w-full">
             {site.portrait ? (
               <Image src={site.portrait} alt="Portrait of Shreekumar B" fill sizes="(min-width: 1024px) 20vw, 60vw" className="object-cover object-[50%_25%]" />
             ) : (
               <svg aria-hidden viewBox="0 0 200 250" className="absolute inset-0 h-full w-full">
-                <text x="6" y="236" fontSize="150" fontWeight="500" letterSpacing="-8" className="fill-rule" fontFamily="var(--font-geist-sans), sans-serif">
+                <text x="6" y="236" fontSize="150" fontWeight="500" letterSpacing="-8" className="fill-rule" fontFamily="var(--font-instrument), sans-serif">
                   SB
                 </text>
               </svg>
@@ -51,19 +50,19 @@ export function About({ level: H = "h3" }: { level?: "h2" | "h3" }) {
         </div>
       </div>
 
-      <StaggerText className="mt-16 grid gap-x-6 gap-y-10 border-t rule pt-6 md:mt-24 md:grid-cols-2 lg:grid-cols-4" itemClassName="">
+      <StaggerText className="mt-20 grid gap-x-6 gap-y-12 border-t rule pt-8 md:mt-28 md:grid-cols-2 lg:grid-cols-4" itemClassName="">
         {columns.map((c) => (
           <div key={c.title}>
-            <H className="meta !text-ink">{c.title}</H>
-            <p className="mt-4 max-w-[36ch] text-secondary">{c.body}</p>
+            <H className="display text-title">{c.title}</H>
+            <p className="mt-3 max-w-[38ch] text-body text-prose">{c.body}</p>
           </div>
         ))}
       </StaggerText>
 
-      <dl className="mt-16 grid gap-x-6 gap-y-8 border-t rule pt-6 md:grid-cols-2 lg:grid-cols-4">
+      <dl className="mt-20 grid gap-x-6 gap-y-8 border-t rule pt-8 md:grid-cols-2 lg:grid-cols-4">
         <div className="lg:col-span-2">
           <dt className="meta">Education</dt>
-          <dd className="mt-3 text-[1.125rem] leading-snug">
+          <dd className="mt-3 text-body">
             {site.education.degree}
             <br />
             <span className="text-secondary">
@@ -73,11 +72,11 @@ export function About({ level: H = "h3" }: { level?: "h2" | "h3" }) {
         </div>
         <div>
           <dt className="meta">Role</dt>
-          <dd className="mt-3 text-[1.125rem]">{site.role}</dd>
+          <dd className="mt-3 text-body">{site.role}</dd>
         </div>
         <div>
           <dt className="meta">Based in</dt>
-          <dd className="mt-3 text-[1.125rem]">{site.location}</dd>
+          <dd className="mt-3 text-body">{site.location}</dd>
         </div>
       </dl>
     </div>

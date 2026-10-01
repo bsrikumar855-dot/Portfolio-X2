@@ -7,6 +7,7 @@ import { SoundToggle } from "./SoundToggle";
 import { ThemeToggle } from "./ThemeToggle";
 import { StatusDot } from "@/components/ui/StatusDot";
 import { nav, site } from "@/data/site";
+import { sentenceCase } from "@/lib/utils/case";
 import { duration, ease, stagger } from "@/lib/motion/tokens";
 
 type Props = { open: boolean; onClose: () => void; activeKey: string; isHome: boolean };
@@ -45,7 +46,7 @@ export function MobileMenu({ open, onClose, activeKey, isHome }: Props) {
     };
     document.addEventListener("keydown", onKey);
     // Leaving the mobile breakpoint closes the menu.
-    const mq = matchMedia("(min-width: 768px)");
+    const mq = matchMedia("(min-width: 1024px)");
     const onMq = () => mq.matches && close.current();
     mq.addEventListener("change", onMq);
     return () => {
@@ -64,16 +65,16 @@ export function MobileMenu({ open, onClose, activeKey, isHome }: Props) {
           role="dialog"
           aria-modal="true"
           aria-label="Menu"
-          className="dark-zone fixed inset-0 z-[60] flex flex-col justify-between p-[var(--gutter)] md:hidden"
+          className="dark-zone fixed inset-0 z-[60] flex flex-col justify-between p-[var(--gutter)] lg:hidden"
           initial={reduce ? { opacity: 0 } : { clipPath: "inset(0% 0% 100% 0%)" }}
           animate={reduce ? { opacity: 1 } : { clipPath: "inset(0% 0% 0% 0%)" }}
           exit={reduce ? { opacity: 0 } : { clipPath: "inset(0% 0% 100% 0%)" }}
           transition={{ duration: duration.standard, ease: ease.inOut }}
         >
           <div className="flex h-[calc(var(--nav-h)-var(--gutter))] items-center justify-between">
-            <span className="font-medium tracking-[-0.02em]">{site.wordmark}</span>
-            <button type="button" className="meta -mr-2 p-2 !text-bg" onClick={onClose}>
-              CLOSE
+            <span className="display text-title">{site.wordmark}</span>
+            <button type="button" data-sound="close" className="meta caps -mr-2 inline-flex min-h-11 min-w-11 items-center justify-center !text-bg" onClick={onClose}>
+              Close
             </button>
           </div>
 
@@ -85,14 +86,14 @@ export function MobileMenu({ open, onClose, activeKey, isHome }: Props) {
                     initial={reduce ? false : { y: "110%" }}
                     animate={{ y: "0%" }}
                     exit={reduce ? undefined : { y: "110%" }}
-                    transition={{ duration: duration.standard * 1.4, ease: ease.out, delay: 0.15 + i * stagger.menu }}
+                    transition={{ duration: duration.reveal, ease: ease.out, delay: 0.15 + i * stagger.menu }}
                   >
                     {isHome ? (
                       <a
                         href={`#${n.section}`}
                         onClick={onClose}
                         aria-current={activeKey === n.key ? "location" : undefined}
-                        className="display flex items-baseline gap-4 py-2 text-[clamp(3.25rem,17vw,6rem)]"
+                        className="display flex min-h-11 items-baseline gap-4 py-2 text-hero"
                       >
                         <span className="meta w-6 shrink-0">{String(i + 1).padStart(2, "0")}</span>
                         {n.label}
@@ -102,7 +103,7 @@ export function MobileMenu({ open, onClose, activeKey, isHome }: Props) {
                         href={n.route}
                         onClick={onClose}
                         aria-current={activeKey === n.key ? "page" : undefined}
-                        className="display flex items-baseline gap-4 py-2 text-[clamp(3.25rem,17vw,6rem)]"
+                        className="display flex min-h-11 items-baseline gap-4 py-2 text-hero"
                       >
                         <span className="meta w-6 shrink-0">{String(i + 1).padStart(2, "0")}</span>
                         {n.label}
@@ -114,13 +115,17 @@ export function MobileMenu({ open, onClose, activeKey, isHome }: Props) {
             </ul>
           </nav>
 
-          <div className="space-y-3">
+          <div className="space-y-1">
             <p className="meta flex items-center gap-2 !text-bg">
               <StatusDot />
-              {site.availability}
+              {sentenceCase(site.availability)}
             </p>
-            <ThemeToggle className="block" />
-            <SoundToggle className="block" />
+            <div>
+              <ThemeToggle />
+            </div>
+            <div>
+              <SoundToggle />
+            </div>
             <p className="meta">{site.location}</p>
           </div>
         </motion.div>

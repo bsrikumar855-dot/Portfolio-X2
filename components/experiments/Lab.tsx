@@ -15,8 +15,8 @@ export function Lab({ level: H = "h3" }: { level?: "h2" | "h3" }) {
             <span>{e.tags.join(" · ")}</span>
           </p>
           <div>
-            <H className={cn("display text-[clamp(2rem,4vw,3.5rem)]", e.todo && "text-secondary")}>{e.title}</H>
-            <p className="mt-4 max-w-[44ch] text-secondary">{e.note}</p>
+            <H className={cn("display text-h3", e.todo && "text-secondary")}>{e.title}</H>
+            <p className="mt-4 max-w-[46ch] text-body text-prose">{e.note}</p>
           </div>
         </li>
       ))}

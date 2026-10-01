@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { tick } from "@/lib/sound";
+import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils/cn";
 
 const marks = [
@@ -20,12 +19,6 @@ const marks = [
  */
 export function SheetRail() {
   const [active, setActive] = useState(0);
-  const prev = useRef(0);
-  useEffect(() => {
-    if (active > prev.current) tick();
-    prev.current = active;
-  }, [active]);
-
   useEffect(() => {
     let raf = 0;
     const measure = () => {

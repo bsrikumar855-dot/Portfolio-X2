@@ -13,8 +13,45 @@
   --color-accent: #8b2635;
   --color-on-dark: #f2f0eb;
 
-  --font-sans: var(--font-geist-sans), Inter, system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), "IBM Plex Mono", ui-monospace, monospace;
+  --color-prose: #2b2926;
+
+  /* Type tokens. Display + headings, body + UI, metadata only. */
+  --font-display: var(--font-instrument), "Instrument Sans", system-ui, sans-serif;
+  --font-sans: var(--font-inter), Inter, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", monospace;
+
+  --text-hero: clamp(2.75rem, 7vw, 6.5rem);
+  --text-hero--line-height: 1.05;
+  --text-hero--letter-spacing: -0.02em;
+  --text-h2: clamp(2rem, 4.5vw, 3.75rem);
+  --text-h2--line-height: 1.1;
+  --text-h2--letter-spacing: -0.015em;
+  --text-h3: clamp(1.5rem, 3vw, 2.5rem);
+  --text-h3--line-height: 1.15;
+  --text-h3--letter-spacing: -0.015em;
+  --text-project: clamp(1.75rem, 3.6vw, 3.5rem);
+  --text-project--line-height: 1.1;
+  --text-project--letter-spacing: -0.015em;
+  --text-numeral: clamp(3rem, 8vw, 7rem);
+  --text-numeral--line-height: 1;
+  --text-lead: clamp(1.25rem, 2vw, 1.625rem);
+  --text-lead--line-height: 1.4;
+  --text-body: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  --text-body--line-height: 1.65;
+  --text-title: clamp(1.25rem, 1.6vw, 1.5rem);
+  --text-title--line-height: 1.25;
+  --text-statement: clamp(1.75rem, 3.6vw, 3.25rem);
+  --text-statement--line-height: 1.15;
+  --text-small: 0.9375rem;
+  --text-small--line-height: 1.55;
+  --text-meta: 0.75rem;
+  --text-meta--line-height: 1.5;
+
+  --leading-heading: 1.1;
+  --leading-body: 1.65;
+  --tracking-heading: -0.015em;
+  --tracking-meta: 0.06em;
+  --tracking-caps: 0.08em;
 
   --breakpoint-3xl: 1600px;
 }
@@ -36,8 +73,8 @@ body {
   background: var(--color-bg);
   color: var(--color-ink);
   font-family: var(--font-sans);
-  font-size: 1.0625rem;
-  line-height: 1.6;
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   overflow-x: clip;
@@ -48,6 +85,7 @@ body {
 html[data-theme="neon"] {
   --color-bg: #070a07;
   --color-ink: #e6f5e6;
+  --color-prose: #cfe6cf;
   --color-secondary: #96b096;
   --color-muted: #647a64;
   --color-rule: #1d2a1e;
@@ -77,26 +115,31 @@ html.theme-anim *, html.theme-anim *::before, html.theme-anim *::after {
 @media (min-width: 768px) { .grid12 { column-gap: 1.5rem; } }
 section[id], [data-anchor] { scroll-margin-top: calc(var(--nav-h) - 1px); }
 
-/* Type */
+/* Type. Mono is for short labels only; long strings stay in sentence case. */
 .meta {
   font-family: var(--font-mono);
-  font-size: 0.72rem;
-  line-height: 1.4;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-size: var(--text-meta);
+  line-height: var(--text-meta--line-height);
+  letter-spacing: var(--tracking-meta);
   color: var(--color-secondary);
 }
+.caps { text-transform: uppercase; letter-spacing: var(--tracking-caps); }
 .dark-zone .meta { color: var(--color-dark-secondary); }
 .display {
+  font-family: var(--font-display);
   font-weight: 500;
-  line-height: 0.9;
-  letter-spacing: -0.045em;
-  text-transform: uppercase;
+  line-height: var(--leading-heading);
+  letter-spacing: var(--tracking-heading);
+  text-wrap: balance;
 }
-.h-page { font-size: clamp(3rem, 9.5vw, 9rem); }
-.h-section { font-size: clamp(2.25rem, 6vw, 5.5rem); }
-.lead { font-size: clamp(1.25rem, 2.1vw, 1.75rem); line-height: 1.35; letter-spacing: -0.015em; }
-.numeral { font-variant-numeric: tabular-nums; font-feature-settings: "tnum"; letter-spacing: -0.04em; }
+.h-hero { font-size: var(--text-hero); line-height: 1.05; letter-spacing: -0.02em; }
+.h-page { font-size: var(--text-hero); line-height: 1.05; letter-spacing: -0.02em; }
+.h-section { font-size: var(--text-h2); }
+.lead { font-size: var(--text-lead); line-height: 1.4; letter-spacing: -0.01em; text-wrap: pretty; }
+.numeral { font-variant-numeric: tabular-nums; font-feature-settings: "tnum"; }
+h1, h2, h3, h4 { text-wrap: balance; hyphens: manual; overflow-wrap: break-word; }
+p, li, dd { text-wrap: pretty; hyphens: manual; overflow-wrap: break-word; }
+.prose-body { max-width: 66ch; color: var(--color-prose); }
 
 /* Ruler: measuring-tape ticks under a hairline. Used on section headers and the hero. */
 .ruler {
@@ -121,13 +164,13 @@ section[id], [data-anchor] { scroll-margin-top: calc(var(--nav-h) - 1px); }
 .rule { border-color: var(--color-rule); }
 
 /* Links */
-.link-u { position: relative; display: inline-block; }
+.link-u { position: relative; }
 .link-u::after {
   content: "";
   position: absolute; left: 0; right: 0; bottom: -2px; height: 1px;
   background: currentColor;
   transform: scaleX(0); transform-origin: right;
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 250ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 .link-u:hover::after, .link-u[aria-current="page"]::after, .link-u[data-active="true"]::after {
   transform: scaleX(1); transform-origin: left;
@@ -161,4 +204,31 @@ html[data-skip-preload] .preloader { display: none; }
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* Buttons: 180ms fill from the left, arrow nudges 4px. Transform + colour only. */
+.btn {
+  position: relative; isolation: isolate; overflow: hidden;
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  min-height: 3rem; padding: 0.75rem 1.4rem;
+  border: 1px solid var(--color-ink);
+  font-size: var(--text-small); font-weight: 500; line-height: 1.2; color: var(--color-ink);
+  transition: color 180ms ease;
+}
+.btn::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: var(--color-ink);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 180ms ease;
+}
+.btn-solid { background: var(--color-ink); color: var(--color-bg); }
+.btn-solid::before { background: var(--color-accent); }
+.btn-arrow { transition: transform 180ms ease; }
+.btn:focus-visible { color: var(--color-bg); }
+.btn:focus-visible::before { transform: scaleX(1); }
+.btn:focus-visible .btn-arrow { transform: translateX(4px); }
+@media (hover: hover) {
+  .btn:hover { color: var(--color-bg); }
+  .btn:hover::before { transform: scaleX(1); }
+  .btn:hover .btn-arrow { transform: translateX(4px); }
 }

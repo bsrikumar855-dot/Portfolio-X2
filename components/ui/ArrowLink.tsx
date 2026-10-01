@@ -9,11 +9,11 @@ type Props = ComponentProps<typeof TransitionLink> & { arrow?: boolean };
 export function ArrowLink({ children, className, arrow = true, ...rest }: Props) {
   return (
     <TransitionLink
-      className={cn("group meta inline-flex items-center gap-3 border-b border-current pb-1.5 !text-current", className)}
+      className={cn("group inline-flex min-h-11 items-center gap-3 border-b border-current text-small font-medium !text-current", className)}
       {...rest}
     >
       {children}
-      {arrow && <ArrowRight aria-hidden size={14} className="transition-transform duration-300 ease-out group-hover:translate-x-1.5" />}
+      {arrow && <ArrowRight aria-hidden size={16} className="transition-transform duration-200 ease-out group-hover:translate-x-1" />}
     </TransitionLink>
   );
 }
