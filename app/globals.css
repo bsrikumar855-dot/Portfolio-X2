@@ -16,7 +16,7 @@
   --color-prose: #2b2926;
 
   /* Type tokens. Display + headings, body + UI, metadata only. */
-  --font-display: var(--font-instrument), "Instrument Sans", system-ui, sans-serif;
+  --font-display: var(--font-fraunces), "Fraunces", Georgia, serif;
   --font-sans: var(--font-inter), Inter, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", monospace;
 
@@ -128,6 +128,9 @@ section[id], [data-anchor] { scroll-margin-top: calc(var(--nav-h) - 1px); }
 .display {
   font-family: var(--font-display);
   font-weight: 500;
+  /* Fixed optical size: Fraunces auto-sizing turns thin strokes into hairlines at poster sizes. */
+  font-optical-sizing: none;
+  font-variation-settings: "opsz" 36;
   line-height: var(--leading-heading);
   letter-spacing: var(--tracking-heading);
   text-wrap: balance;

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Geist_Mono, Inter, Instrument_Sans } from "next/font/google";
+import { Fraunces, Geist_Mono, Inter } from "next/font/google";
 import { Footer } from "@/components/footer/Footer";
 import { Nav } from "@/components/navigation/Nav";
 import { AppShell } from "@/components/ui/AppShell";
@@ -7,7 +7,7 @@ import { site } from "@/data/site";
 import { jsonLd, siteGraph } from "@/lib/seo";
 import "./globals.css";
 
-const display = Instrument_Sans({ subsets: ["latin"], weight: ["500", "600"], variable: "--font-instrument", display: "swap" });
+const display = Fraunces({ subsets: ["latin"], axes: ["opsz"], variable: "--font-fraunces", display: "swap" });
 const body = Inter({ subsets: ["latin"], weight: ["400", "500"], variable: "--font-inter", display: "swap" });
 const mono = Geist_Mono({ subsets: ["latin"], weight: ["400"], variable: "--font-geist-mono", display: "swap" });
 

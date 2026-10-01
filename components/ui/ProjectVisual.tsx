@@ -32,7 +32,7 @@ export function ProjectVisual({ project, index, className, sizes = "(min-width: 
       className={cn("relative h-full w-full overflow-hidden [container-type:size]", dark ? "dark-zone" : "bg-tint text-ink", className)}
     >
       <svg aria-hidden viewBox="0 0 400 300" preserveAspectRatio="xMinYMax slice" className="absolute inset-0 h-full w-full">
-        <text x="-6" y="318" fontSize="250" fontWeight="500" letterSpacing="-12" className={dark ? "fill-dark-rule" : "fill-rule"} fontFamily="var(--font-instrument), sans-serif">
+        <text x="-6" y="318" fontSize="250" fontWeight="500" letterSpacing="-12" className={dark ? "fill-dark-rule" : "fill-rule"} fontFamily="var(--font-fraunces), sans-serif">
           {String(index + 1).padStart(2, "0")}
         </text>
       </svg>

@@ -36,7 +36,7 @@ export function About({ level: H = "h3" }: { level?: "h2" | "h3" }) {
               <Image src={site.portrait} alt="Portrait of Shreekumar B" fill sizes="(min-width: 1024px) 20vw, 60vw" className="object-cover object-[50%_25%]" />
             ) : (
               <svg aria-hidden viewBox="0 0 200 250" className="absolute inset-0 h-full w-full">
-                <text x="6" y="236" fontSize="150" fontWeight="500" letterSpacing="-8" className="fill-rule" fontFamily="var(--font-instrument), sans-serif">
+                <text x="6" y="236" fontSize="150" fontWeight="500" letterSpacing="-8" className="fill-rule" fontFamily="var(--font-fraunces), sans-serif">
                   SB
                 </text>
               </svg>
