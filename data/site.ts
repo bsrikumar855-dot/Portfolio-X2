@@ -1,13 +1,13 @@
 export const site = {
   name: "Shreekumar B",
   wordmark: "SHREEKUMAR.B",
-  title: "Shreekumar B — AI & Frontend Developer",
+  title: "Shreekumar B — Full-System Builder & AI Engineer",
   description:
-    "Shreekumar B is an AI builder, frontend developer and product engineer in Coimbatore, India. He builds ambitious products, interfaces and intelligent systems with a deterministic core and an LLM language layer.",
+    "Shreekumar B is a full-system builder and AI engineer in Coimbatore, India. He designs and ships AI products end to end, from models and backends to interfaces and infrastructure, with a deterministic core and an LLM language layer.",
   // Only deployed URL known today. Replace with the final domain.
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://main.intro-3ve.pages.dev",
-  positioning: "AI Builder · Frontend Developer · Product Engineer",
-  disciplines: "AI / FRONTEND / PRODUCT ENGINEERING",
+  positioning: "Full-System Builder · AI Engineer · Product Engineer",
+  disciplines: "AI / SYSTEMS / PRODUCT ENGINEERING",
   location: "Coimbatore, India",
   timezone: "Asia/Kolkata",
   email: "bsrikumar855@gmail.com",

@@ -29,7 +29,7 @@ export function About({ level: H = "h3" }: { level?: "h2" | "h3" }) {
         <SplitText
           as="p"
           className="col-span-12 text-[clamp(1.75rem,4vw,3.5rem)] font-medium leading-[1.08] tracking-[-0.03em] lg:col-span-9"
-          text="I'm Shreekumar, an AI and frontend-focused builder interested in turning difficult technical problems into products people can actually use."
+          text="I'm Shreekumar, a full-system builder interested in turning difficult technical problems into products people can actually use."
         />
         <div className="col-span-12 lg:col-span-3 lg:col-start-10 lg:row-start-1">
           <div className="relative aspect-[4/5] w-2/3 bg-tint lg:w-full">

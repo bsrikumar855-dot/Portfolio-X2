@@ -13,7 +13,7 @@ export function Hero() {
         <div className="grid grid-cols-12 items-end gap-x-6 gap-y-8 pb-8 pt-8 md:pb-10">
           <StaggerText delay={0.5} className="col-span-12 md:col-span-6">
             <p className="lead max-w-[30ch] md:max-w-[36ch]">
-              AI builder and frontend developer creating ambitious products, interfaces and intelligent systems.
+              Full-system builder shipping AI products end to end: models, backends, interfaces and the infrastructure between them.
             </p>
           </StaggerText>
 

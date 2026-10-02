@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   title: { default: site.title, template: "%s | Shreekumar B" },
   description: site.description,
   applicationName: site.name,
-  keywords: ["Shreekumar B", "AI engineer", "frontend developer", "product engineer", "Next.js", "computer vision", "OCR", "LLM", "Coimbatore"],
+  keywords: ["Shreekumar B", "full-system builder", "AI engineer", "product engineer", "FastAPI", "Next.js", "computer vision", "OCR", "LLM", "Coimbatore"],
   creator: site.name,
   category: "technology",
   authors: [{ name: site.name, url: site.url }],

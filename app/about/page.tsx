@@ -8,9 +8,9 @@ import { SectionHeader } from "@/components/ui/SectionHeader";
 export const metadata: Metadata = {
   title: "About",
   alternates: { canonical: "/about" },
-  openGraph: { title: "About | Shreekumar B", url: "/about", images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Shreekumar B: AI & Frontend Developer" }], type: "profile" },
+  openGraph: { title: "About | Shreekumar B", url: "/about", images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Shreekumar B: Full-System Builder & AI Engineer" }], type: "profile" },
   description:
-    "Shreekumar B is an AI and frontend-focused builder in Coimbatore, studying AI & Data Science and leading Team Ragnarok.",
+    "Shreekumar B is a full-system builder in Coimbatore, studying AI & Data Science and leading Team Ragnarok.",
 };
 
 export default function AboutPage() {

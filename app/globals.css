@@ -135,6 +135,20 @@ html.lenis, html.lenis body { height: auto; }
   mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='22'%3E%3Cpath d='M.5 0V22M8.5 0V8M16.5 0V8M24.5 0V8M32.5 0V8M40.5 0V15M48.5 0V8M56.5 0V8M64.5 0V8M72.5 0V8' stroke='black' fill='none'/%3E%3C/svg%3E") repeat-x;
 }
 
+/* Viewfinder cursor (see Cursor.tsx). Colour follows the zone it is over. */
+.reticle {
+  position: fixed; left: 0; top: 0; z-index: 300; pointer-events: none;
+  color: var(--color-ink);
+  opacity: 0;
+  transition: color 0.2s ease, opacity 0.2s ease;
+}
+.reticle[data-visible="1"] { opacity: 1; }
+.reticle[data-tone="dark"] { color: var(--color-on-dark); }
+.reticle[data-mode="lock"]:not([data-tone="dark"]), .reticle[data-mode="big"]:not([data-tone="dark"]) { color: var(--color-accent); }
+.reticle[data-pressed="1"] { color: var(--color-accent); }
+.reticle > span { transition: opacity 0.2s ease; }
+.reticle[data-mode="lock"] > span:nth-of-type(5) { opacity: 0; }
+
 /* Zones */
 .dark-zone {
   /* Inside a dark zone, "bg" means the light text colour, so text-bg keeps working in both themes. */

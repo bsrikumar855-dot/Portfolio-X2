@@ -12,6 +12,13 @@ export type Capability = { title: string; summary: string; detail: string; proof
 
 export const capabilities: readonly Capability[] = [
   {
+    title: "Systems & Backend",
+    summary: "The whole stack, built to hold together.",
+    detail:
+      "Services, queues, databases and CI as one system: FastAPI and Fastify backends, Postgres with row-level security, BullMQ workers, OpenTelemetry, and monorepo pipelines with gates that fail the build.",
+    proof: "PRYSM · DriftCheck",
+  },
+  {
     title: "Frontend Engineering",
     summary: "Interfaces that feel considered at every state.",
     detail:

@@ -7,7 +7,7 @@ import { projects } from "@/data/projects";
 export const metadata: Metadata = {
   title: "Selected Work",
   alternates: { canonical: "/work" },
-  openGraph: { title: "Selected Work | Shreekumar B", url: "/work", images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Shreekumar B: AI & Frontend Developer" }] },
+  openGraph: { title: "Selected Work | Shreekumar B", url: "/work", images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Shreekumar B: Full-System Builder & AI Engineer" }] },
   description:
     "Five projects by Shreekumar B: AI exam grading, compliance, engineering risk, post-deploy verification and a national-finalist consumer AI.",
 };

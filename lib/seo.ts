@@ -13,7 +13,7 @@ export const person = {
   url: abs("/"),
   image: site.portrait ? abs(site.portrait) : undefined,
   email: `mailto:${site.email}`,
-  jobTitle: "AI Builder and Frontend Developer",
+  jobTitle: "Full-System Builder and AI Engineer",
   description: site.description,
   homeLocation: { "@type": "Place", name: "Coimbatore, India" },
   address: { "@type": "PostalAddress", addressLocality: "Coimbatore", addressCountry: "IN" },
