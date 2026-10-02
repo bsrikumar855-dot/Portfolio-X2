@@ -110,6 +110,31 @@ section[id], [data-anchor] { scroll-margin-top: calc(var(--nav-h) - 1px); }
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='10'%3E%3Cpath d='M.5 0V10M8.5 0V4M16.5 0V4M24.5 0V4M32.5 0V4M40.5 0V7M48.5 0V4M56.5 0V4M64.5 0V4M72.5 0V4' stroke='%23625f5a' fill='none'/%3E%3C/svg%3E");
 }
 
+@keyframes schem-bar {
+  0% { transform: scaleX(0); transform-origin: left; }
+  7% { transform: scaleX(1); transform-origin: left; }
+  16% { transform: scaleX(1); transform-origin: right; }
+  24%, 100% { transform: scaleX(0); transform-origin: right; }
+}
+.schem-bar {
+  transform: scaleX(0);
+  animation: schem-bar calc(var(--n, 4) * 0.55s + 2.6s) cubic-bezier(0.65, 0, 0.35, 1) infinite;
+  animation-delay: calc(var(--i, 0) * 0.55s);
+}
+
+/* Inertial scrolling (desktop pointers only, see SmoothScroll). */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+/* Measuring tape ticks, coloured by the current text colour so every theme works. */
+.tape {
+  background: currentColor;
+  opacity: 0.55;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='22'%3E%3Cpath d='M.5 0V22M8.5 0V8M16.5 0V8M24.5 0V8M32.5 0V8M40.5 0V15M48.5 0V8M56.5 0V8M64.5 0V8M72.5 0V8' stroke='black' fill='none'/%3E%3C/svg%3E") repeat-x;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='22'%3E%3Cpath d='M.5 0V22M8.5 0V8M16.5 0V8M24.5 0V8M32.5 0V8M40.5 0V15M48.5 0V8M56.5 0V8M64.5 0V8M72.5 0V8' stroke='black' fill='none'/%3E%3C/svg%3E") repeat-x;
+}
+
 /* Zones */
 .dark-zone {
   /* Inside a dark zone, "bg" means the light text colour, so text-bg keeps working in both themes. */

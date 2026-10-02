@@ -3,6 +3,7 @@ import { Signals } from "@/components/achievements/Signals";
 import { Capabilities } from "@/components/capabilities/Capabilities";
 import { Contact } from "@/components/contact/Contact";
 import { Lab } from "@/components/experiments/Lab";
+import { MeasureTape } from "@/components/ui/MeasureTape";
 import { SheetRail } from "@/components/navigation/SheetRail";
 import { Hero } from "@/components/hero/Hero";
 import { ProjectList } from "@/components/projects/ProjectList";
@@ -35,6 +36,8 @@ export default function Home() {
           <ArrowLink href="/work">ALL PROJECTS</ArrowLink>
         </div>
       </section>
+
+      <MeasureTape />
 
       <section id="capabilities" className={pad}>
         <div className="wrap">

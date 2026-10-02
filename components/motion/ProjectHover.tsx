@@ -13,7 +13,7 @@ type Props = { href: string; cursor?: string; children: ReactNode; className?: s
  */
 export function ProjectHover({ href, cursor = "VIEW", children, className }: Props) {
   return (
-    <TransitionLink href={href} onMouseEnter={soft} data-cursor={cursor} className={cn("group relative block", className)}>
+    <TransitionLink href={href} onMouseEnter={() => soft()} data-cursor={cursor} className={cn("group relative block", className)}>
       {children}
     </TransitionLink>
   );

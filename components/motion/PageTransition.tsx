@@ -5,7 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { nav } from "@/data/site";
 import { projects } from "@/data/projects";
-import { paper } from "@/lib/sound";
+import { chime, paper } from "@/lib/sound";
 import { duration, ease } from "@/lib/motion/tokens";
 
 type Phase = "idle" | "cover" | "reveal";
@@ -65,6 +65,7 @@ export function PageTransition({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (phase === "cover" && target.current === "arrived") {
       window.clearTimeout(fallback.current);
+      chime();
       setPhase("reveal");
     }
   }, [pathname, phase]);

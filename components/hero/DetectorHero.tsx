@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { Fragment, useEffect, useState } from "react";
 import { site } from "@/data/site";
 import { duration, ease, stagger } from "@/lib/motion/tokens";
-import { soft, tick } from "@/lib/sound";
+import { blip, detect, scan } from "@/lib/sound";
 import { useReveal } from "@/lib/motion/useReveal";
 import { cn } from "@/lib/utils/cn";
 
@@ -69,12 +69,14 @@ export function DetectorHero() {
 
   useEffect(() => {
     if (!show || reduce) return;
+    const s = window.setTimeout(scan, 500);
     const a = window.setTimeout(() => {
       setFound(true);
-      tick();
+      detect();
     }, 1500);
     const b = window.setTimeout(() => setFound(false), 3400);
     return () => {
+      window.clearTimeout(s);
       window.clearTimeout(a);
       window.clearTimeout(b);
     };
@@ -82,7 +84,7 @@ export function DetectorHero() {
 
   const enter = (i: number) => {
     setActive(i);
-    soft();
+    blip(i);
   };
   const word = active === null ? null : words[active];
 

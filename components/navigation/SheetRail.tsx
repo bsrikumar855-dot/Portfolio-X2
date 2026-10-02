@@ -22,7 +22,7 @@ export function SheetRail() {
   const [active, setActive] = useState(0);
   const prev = useRef(0);
   useEffect(() => {
-    if (active > prev.current) tick();
+    if (active > prev.current) tick(active);
     prev.current = active;
   }, [active]);
 

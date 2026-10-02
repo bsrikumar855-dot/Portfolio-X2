@@ -1,3 +1,4 @@
+import { Magnetic } from "@/components/motion/Magnetic";
 import { StaggerText } from "@/components/motion/StaggerText";
 import { site } from "@/data/site";
 import { DetectorHero } from "./DetectorHero";
@@ -18,9 +19,13 @@ export function Hero() {
 
           <StaggerText delay={0.85} className="col-span-12 md:col-span-5 md:col-start-8">
             <div className="flex flex-wrap items-center gap-x-8 gap-y-5 md:justify-end">
-              <a href="#work" className="meta inline-flex items-center bg-ink px-5 py-4 !text-bg transition-colors duration-200 hover:bg-accent">
+              <Magnetic>
+
+                <a href="#work" className="meta inline-flex items-center bg-ink px-5 py-4 !text-bg transition-colors duration-200 hover:bg-accent">
                 VIEW SELECTED WORK
               </a>
+
+              </Magnetic>
               <a href="#contact" className="meta link-u !text-ink">
                 LET&rsquo;S CONNECT
               </a>
