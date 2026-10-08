@@ -30,7 +30,7 @@ export function RevealText({ lines, as = "div", id, className, lineClassName, de
         <span key={line + i} className={cn("block overflow-hidden py-[0.06em] -my-[0.06em]", typeof lineClassName === "string" ? lineClassName : lineClassName?.[i])}>
           <motion.span
             data-reveal
-            className="block will-change-transform"
+            className="block"
             initial={reduce ? false : { y: "115%" }}
             animate={show ? { y: "0%" } : { y: "115%" }}
             transition={{ duration: duration.dramatic, ease: ease.out, delay: delay + i * stagger.text }}

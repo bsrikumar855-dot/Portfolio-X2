@@ -122,11 +122,6 @@ section[id], [data-anchor] { scroll-margin-top: calc(var(--nav-h) - 1px); }
   animation-delay: calc(var(--i, 0) * 0.55s);
 }
 
-/* Inertial scrolling (desktop pointers only, see SmoothScroll). */
-html.lenis, html.lenis body { height: auto; }
-.lenis.lenis-smooth { scroll-behavior: auto !important; }
-.lenis.lenis-stopped { overflow: hidden; }
-
 /* Measuring tape ticks, coloured by the current text colour so every theme works. */
 .tape {
   background: currentColor;

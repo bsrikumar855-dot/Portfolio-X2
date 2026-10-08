@@ -5,9 +5,9 @@ import { useEffect, useRef } from "react";
 type Props = { src: string; poster: string };
 
 /**
- * A muted, looping preview for a project card. Nothing loads until the card is near the viewport, it plays
- * only while visible, and it stays a still poster for reduced motion and data-saver. Decorative: the card's own
- * link text names the project.
+ * A muted, looping preview for a project card. A small silent file loads only when the card is near the
+ * viewport and plays only while at least half visible, so at most one or two decode at once. It stays a still
+ * poster for reduced motion and data-saver. Decorative: the card's own link text names the project.
  */
 export function LoopVideo({ src, poster }: Props) {
   const ref = useRef<HTMLVideoElement>(null);
@@ -23,18 +23,16 @@ export function LoopVideo({ src, poster }: Props) {
     const io = new IntersectionObserver(
       ([entry]) => {
         if (!entry) return;
-        if (entry.isIntersecting) {
-          if (!loaded) {
-            loaded = true;
-            v.poster = poster;
-            if (!still) v.src = src;
-          }
-          if (!still) void v.play().catch(() => {});
-        } else if (!still) {
-          v.pause();
+        if (entry.isIntersecting && !loaded) {
+          loaded = true;
+          v.poster = poster;
+          if (!still) v.src = src;
         }
+        if (still) return;
+        if (entry.intersectionRatio >= 0.5) void v.play().catch(() => {});
+        else v.pause();
       },
-      { rootMargin: "300px 0px", threshold: 0.15 },
+      { rootMargin: "250px 0px", threshold: [0, 0.5] },
     );
     io.observe(v);
     return () => io.disconnect();

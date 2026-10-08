@@ -45,14 +45,27 @@ export function Cursor() {
       return { x: m.x - s / 2, y: m.y - s / 2, w: s, h: s };
     };
 
+    // The loop only runs while something is still moving, then goes to sleep (no idle frames, no idle style work).
     const tick = () => {
+      raf = 0;
       const t = target();
       const squeeze = pressed ? 5 : 0;
       const k = mode === "free" ? 0.38 : 0.24;
-      cur.x += (t.x + squeeze - cur.x) * k;
-      cur.y += (t.y + squeeze - cur.y) * k;
-      cur.w += (t.w - squeeze * 2 - cur.w) * k;
-      cur.h += (t.h - squeeze * 2 - cur.h) * k;
+      const tx = t.x + squeeze;
+      const ty = t.y + squeeze;
+      const tw = t.w - squeeze * 2;
+      const th = t.h - squeeze * 2;
+      cur.x += (tx - cur.x) * k;
+      cur.y += (ty - cur.y) * k;
+      cur.w += (tw - cur.w) * k;
+      cur.h += (th - cur.h) * k;
+      const settling = Math.abs(tx - cur.x) > 0.2 || Math.abs(ty - cur.y) > 0.2 || Math.abs(tw - cur.w) > 0.2 || Math.abs(th - cur.h) > 0.2;
+      if (!settling) {
+        cur.x = tx;
+        cur.y = ty;
+        cur.w = tw;
+        cur.h = th;
+      }
       const { x, y, w, h } = cur;
       const c = corners.current;
       if (c[0]) c[0].style.transform = `translate3d(${x}px, ${y}px, 0)`;
@@ -61,17 +74,22 @@ export function Cursor() {
       if (c[3]) c[3].style.transform = `translate3d(${x + w - ARM}px, ${y + h - ARM}px, 0)`;
       if (dot.current) dot.current.style.transform = `translate3d(${m.x - 2}px, ${m.y - 2}px, 0)`;
       if (tag.current) tag.current.style.transform = `translate3d(${x}px, ${y - 24}px, 0)`;
-      raf = requestAnimationFrame(tick);
+      if (settling) wake();
+    };
+    const wake = () => {
+      if (!raf) raf = requestAnimationFrame(tick);
     };
 
     const setMode = (next: typeof mode) => {
       mode = next;
       rootEl.dataset.mode = next;
+      wake();
     };
 
     const move = (e: MouseEvent) => {
       m.x = e.clientX;
       m.y = e.clientY;
+      wake();
       if (rootEl.dataset.visible !== "1") {
         // First movement: appear in place instead of flying in from off-screen.
         cur.x = m.x - BASE / 2;
@@ -79,8 +97,7 @@ export function Cursor() {
         rootEl.dataset.visible = "1";
       }
     };
-    const over = (e: MouseEvent) => {
-      const t = e.target as Element | null;
+    const evaluate = (t: Element | null) => {
       rootEl.dataset.tone = t?.closest(".dark-zone") ? "dark" : "light";
       el = t?.closest(SELECTOR) ?? null;
       if (!el) {
@@ -92,18 +109,36 @@ export function Cursor() {
       setLabel((el as HTMLElement).dataset.cursor ?? "");
       setMode(r.width > 380 || r.height > 240 ? "big" : "lock");
     };
+    let scrolling = false;
+    let idle = 0;
+    const over = (e: MouseEvent) => {
+      if (!scrolling) evaluate(e.target as Element | null);
+    };
+    const onScrollEnd = () => {
+      scrolling = true;
+      window.clearTimeout(idle);
+      idle = window.setTimeout(() => {
+        scrolling = false;
+        if (m.x >= 0) evaluate(document.elementFromPoint(m.x, m.y));
+      }, 150);
+    };
     const down = () => {
       pressed = true;
       rootEl.dataset.pressed = "1";
+      wake();
     };
     const up = () => {
       pressed = false;
       delete rootEl.dataset.pressed;
+      wake();
     };
     const leave = () => delete rootEl.dataset.visible;
 
-    raf = requestAnimationFrame(tick);
+    wake();
     window.addEventListener("mousemove", move, { passive: true });
+    // A locked reticle follows its element while the page scrolls under a still mouse.
+    window.addEventListener("scroll", wake, { passive: true });
+    window.addEventListener("scroll", onScrollEnd, { passive: true });
     document.addEventListener("mouseover", over, { passive: true });
     window.addEventListener("mousedown", down, { passive: true });
     window.addEventListener("mouseup", up, { passive: true });
@@ -111,6 +146,9 @@ export function Cursor() {
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("mousemove", move);
+      window.removeEventListener("scroll", wake);
+      window.removeEventListener("scroll", onScrollEnd);
+      window.clearTimeout(idle);
       document.removeEventListener("mouseover", over);
       window.removeEventListener("mousedown", down);
       window.removeEventListener("mouseup", up);

@@ -1,9 +1,14 @@
 // Launch videos, one per project (made with the /brag skill; files live in public/videos).
-// Adding a video: drop `<slug>.mp4` and `<slug>.jpg` into public/videos and add the slug here.
+// Adding a video: drop `<slug>.mp4`, `<slug>.jpg`, `<slug>.preview.mp4` (640px, silent) and
+// `<slug>.poster-sm.jpg` into public/videos and add the slug here.
 
 export type LaunchVideo = {
+  /** Full video with sound, played on the case-study page. */
   src: string;
   poster: string;
+  /** Small silent loop for project cards. */
+  preview: string;
+  posterSmall: string;
   /** Display length, e.g. "0:24". */
   duration: string;
   seconds: number;
@@ -14,6 +19,8 @@ export type LaunchVideo = {
 const make = (slug: string, seconds: number): LaunchVideo => ({
   src: `/videos/${slug}.mp4`,
   poster: `/videos/${slug}.jpg`,
+  preview: `/videos/${slug}.preview.mp4`,
+  posterSmall: `/videos/${slug}.poster-sm.jpg`,
   seconds,
   duration: `0:${String(Math.round(seconds)).padStart(2, "0")}`,
   width: 1920,

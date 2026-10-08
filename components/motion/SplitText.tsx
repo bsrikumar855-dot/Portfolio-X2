@@ -24,7 +24,7 @@ export function SplitText({ text, as = "p", className, delay = 0, step = 0.025 }
         <span key={w + i} className="inline-block overflow-hidden align-bottom py-[0.08em] -my-[0.08em]">
           <motion.span
             data-reveal
-            className="inline-block will-change-transform"
+            className="inline-block"
             initial={reduce ? false : { y: "110%" }}
             animate={show ? { y: "0%" } : { y: "110%" }}
             transition={{ duration: duration.dramatic * 0.8, ease: ease.out, delay: delay + i * step }}

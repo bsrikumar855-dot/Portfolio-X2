@@ -5,7 +5,6 @@ import { PageTransition } from "@/components/motion/PageTransition";
 import { click, initSound } from "@/lib/sound";
 import { ReadyContext } from "@/lib/motion/ready";
 import { Cursor } from "./Cursor";
-import { SmoothScroll } from "./SmoothScroll";
 import { Preloader } from "./Preloader";
 
 /** Client shell: preloader, ready signal for reveals, page transition and cursor. */
@@ -25,7 +24,6 @@ export function AppShell({ children }: { children: ReactNode }) {
       <PageTransition>{children}</PageTransition>
       <Preloader onDone={() => setReady(true)} />
       <Cursor />
-      <SmoothScroll />
     </ReadyContext.Provider>
   );
 }

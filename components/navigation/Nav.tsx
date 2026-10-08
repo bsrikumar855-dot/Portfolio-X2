@@ -1,10 +1,11 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState } from "react";
 import { TransitionLink } from "@/components/motion/TransitionLink";
 import { StatusDot } from "@/components/ui/StatusDot";
 import { nav, site } from "@/data/site";
+import { scrollMax, sectionTop, subscribeScroll } from "@/lib/scroll";
 import { cn } from "@/lib/utils/cn";
 import { MobileMenu } from "./MobileMenu";
 import { SoundToggle } from "./SoundToggle";
@@ -26,34 +27,31 @@ export function Nav() {
   const [open, setOpen] = useState(false);
   const onDark = pathname === "/contact" && !scrolled;
   const menuBtn = useRef<HTMLButtonElement>(null);
-  const header = useRef<HTMLElement>(null);
+  const playhead = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
-    let raf = 0;
-    const measure = () => {
-      raf = 0;
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      header.current?.style.setProperty("--p", String(max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0));
-      setScrolled(window.scrollY > 24);
+    let width = document.documentElement.clientWidth;
+    const onResize = () => {
+      width = document.documentElement.clientWidth;
+    };
+    window.addEventListener("resize", onResize);
+    const off = subscribeScroll((y) => {
+      const max = scrollMax();
+      const p = max > 0 ? Math.min(1, Math.max(0, y / max)) : 0;
+      if (playhead.current) playhead.current.style.transform = `translateX(${(p * width).toFixed(1)}px)`;
+      setScrolled(y > 24);
       if (!isHome) return;
-      const line = window.innerHeight * 0.4;
+      const line = y + window.innerHeight * 0.4;
       let current = "";
       for (const id of sectionKeys) {
-        const el = document.getElementById(id);
-        if (el && el.getBoundingClientRect().top <= line) current = id;
+        const top = sectionTop(id);
+        if (top !== null && top <= line) current = id;
       }
       setSection(current);
-    };
-    const onScroll = () => {
-      if (!raf) raf = requestAnimationFrame(measure);
-    };
-    measure();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
+    });
     return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
+      window.removeEventListener("resize", onResize);
+      off();
     };
   }, [isHome, pathname]);
 
@@ -69,8 +67,6 @@ export function Nav() {
   return (
     <>
       <header
-        ref={header}
-        style={{ "--p": 0 } as CSSProperties}
         className={cn(
           "fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color,color] duration-300",
           onDark ? "text-on-dark" : "text-ink",
@@ -78,9 +74,9 @@ export function Nav() {
         )}
       >
         {/* The tape, with the playhead that tracks scroll position. */}
-        <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-[10px] [container-type:inline-size]">
+        <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-[10px]">
           <span className="tape absolute inset-0" style={{ WebkitMaskSize: "auto 10px", maskSize: "auto 10px" }} />
-          <span className="absolute left-0 top-0 h-[16px] w-px bg-accent" style={{ transform: "translateX(calc(var(--p) * 100cqw))" }}>
+          <span ref={playhead} className="absolute left-0 top-0 h-[16px] w-px bg-accent will-change-transform">
             <span className="absolute -left-[4px] top-[16px] size-0 border-x-[4px] border-t-[6px] border-x-transparent border-t-accent" />
           </span>
         </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { sectionTop, subscribeScroll } from "@/lib/scroll";
 import { tick } from "@/lib/sound";
 import { cn } from "@/lib/utils/cn";
 
@@ -26,30 +27,19 @@ export function SheetRail() {
     prev.current = active;
   }, [active]);
 
-  useEffect(() => {
-    let raf = 0;
-    const measure = () => {
-      raf = 0;
-      const line = window.innerHeight * 0.45;
-      let cur = 0;
-      marks.forEach((m, i) => {
-        const el = document.getElementById(m.id);
-        if (el && el.getBoundingClientRect().top <= line) cur = i;
-      });
-      setActive(cur);
-    };
-    const onScroll = () => {
-      if (!raf) raf = requestAnimationFrame(measure);
-    };
-    measure();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-    };
-  }, []);
+  useEffect(
+    () =>
+      subscribeScroll((y) => {
+        const line = y + window.innerHeight * 0.45;
+        let cur = 0;
+        marks.forEach((m, i) => {
+          const top = sectionTop(m.id);
+          if (top !== null && top <= line) cur = i;
+        });
+        setActive(cur);
+      }),
+    [],
+  );
 
   const onDark = marks[active]?.dark ?? false;
 
