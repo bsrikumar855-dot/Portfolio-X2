@@ -4,6 +4,7 @@ import { ProjectHover } from "@/components/motion/ProjectHover";
 import { RevealText } from "@/components/motion/RevealText";
 import { ProjectVisual } from "@/components/ui/ProjectVisual";
 import { VideoBadge } from "@/components/ui/VideoBadge";
+import { LoopVideo } from "./LoopVideo";
 import { getVideo } from "@/data/videos";
 import type { Project } from "@/data/projects";
 
@@ -18,9 +19,13 @@ export function ProjectList({ items, level = "h3" }: Props) {
           <ProjectHover href={`/work/${p.slug}`}>
             <article className="wrap grid12 gap-y-6 py-8 md:py-12">
               <div className="order-first col-span-12 md:order-none md:col-span-4 md:col-start-9 md:row-span-2 md:row-start-1 lg:col-span-3 lg:col-start-10">
-                <ImageReveal className="aspect-[4/3] w-full">
+                <ImageReveal className={getVideo(p.slug) ? "aspect-video w-full" : "aspect-[4/3] w-full"}>
                   <div className="h-full w-full transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] md:group-hover:-translate-x-[1.5%] md:group-hover:-translate-y-[1.5%] md:group-hover:scale-[1.07] md:group-focus-visible:scale-[1.07]">
-                    <ProjectVisual project={p} index={i} tone={i % 2 === 0 ? "light" : "dark"} sizes="(min-width: 1024px) 26vw, (min-width: 768px) 33vw, 100vw" />
+                    {getVideo(p.slug) ? (
+                      <LoopVideo src={getVideo(p.slug)!.src} poster={getVideo(p.slug)!.poster} />
+                    ) : (
+                      <ProjectVisual project={p} index={i} tone={i % 2 === 0 ? "light" : "dark"} sizes="(min-width: 1024px) 26vw, (min-width: 768px) 33vw, 100vw" />
+                    )}
                   </div>
                 </ImageReveal>
               </div>
