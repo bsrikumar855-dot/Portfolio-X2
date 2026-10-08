@@ -5,6 +5,8 @@ import { ParallaxImage } from "@/components/motion/ParallaxImage";
 import { RevealText } from "@/components/motion/RevealText";
 import { ArrowLink } from "@/components/ui/ArrowLink";
 import { ProjectVisual } from "@/components/ui/ProjectVisual";
+import { getVideo, musicCredit } from "@/data/videos";
+import { ProjectVideo } from "./ProjectVideo";
 import { chapters, nextProject, projects, type Project, type Section } from "@/data/projects";
 import { isTodo } from "@/data/site";
 import { ChapterNav } from "./ChapterNav";
@@ -58,6 +60,7 @@ function Body({ s, isResult, project }: { s: Section; isResult?: boolean; projec
 export function CaseStudy({ project }: { project: Project }) {
   const index = projects.findIndex((p) => p.slug === project.slug);
   const next = nextProject(project.slug);
+  const video = getVideo(project.slug);
   const nextIndex = projects.findIndex((p) => p.slug === next.slug);
 
   return (
@@ -99,11 +102,24 @@ export function CaseStudy({ project }: { project: Project }) {
       </header>
 
       <div className="wrap">
-        <ImageReveal className="aspect-[4/3] w-full md:aspect-[16/8]">
-          <ParallaxImage className="h-full w-full">
-            <ProjectVisual project={project} index={index} tone="dark" sizes="100vw" priority />
-          </ParallaxImage>
-        </ImageReveal>
+        {video ? (
+          <>
+            <ImageReveal className="w-full">
+              <ProjectVideo video={video} title={project.title} />
+            </ImageReveal>
+            <p className="meta mt-4">
+              <a href={musicCredit.href} target="_blank" rel="noopener noreferrer" className="link-u">
+                {musicCredit.text}
+              </a>
+            </p>
+          </>
+        ) : (
+          <ImageReveal className="aspect-[4/3] w-full md:aspect-[16/8]">
+            <ParallaxImage className="h-full w-full">
+              <ProjectVisual project={project} index={index} tone="dark" sizes="100vw" priority />
+            </ParallaxImage>
+          </ImageReveal>
+        )}
       </div>
 
       <div id={BODY_ID} className="wrap grid12 mt-12 gap-y-0 pb-24 md:mt-24 md:pb-36">

@@ -4,3 +4,6 @@ next-env.d.ts
 *.tsbuildinfo
 
 .vercel
+
+# generated launch video (music licence must be checked before publishing)
+brag-output

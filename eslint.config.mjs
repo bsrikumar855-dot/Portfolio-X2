@@ -6,5 +6,5 @@ export default defineConfig([
   ...vitals,
   ...ts,
   { rules: { "@typescript-eslint/no-explicit-any": "error" } },
-  globalIgnores([".next/**", "node_modules/**", "next-env.d.ts"]),
+  globalIgnores([".next/**", "node_modules/**", "next-env.d.ts", "brag-output/**"]),
 ]);

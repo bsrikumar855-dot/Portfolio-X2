@@ -1,5 +1,6 @@
 import { projects, type Project } from "@/data/projects";
 import { skills } from "@/data/skills";
+import { getVideo } from "@/data/videos";
 import { site } from "@/data/site";
 
 const abs = (path: string): string => new URL(path, site.url).toString().replace(/\/$/, "");
@@ -47,6 +48,7 @@ export const profilePage = {
 /** Case study: a CreativeWork by the person, with breadcrumbs. */
 export function caseStudyGraph(p: Project) {
   const url = abs(`/work/${p.slug}`);
+  const v = getVideo(p.slug);
   return {
     "@context": "https://schema.org",
     "@graph": [
@@ -65,6 +67,25 @@ export function caseStudyGraph(p: Project) {
         isPartOf: { "@id": `${abs("/")}#website` },
         ...(p.links[0] ? { sameAs: p.links.map((l) => l.href) } : {}),
       },
+      ...(v
+        ? [
+            {
+              "@type": "VideoObject",
+              "@id": `${url}#video`,
+              name: `${p.title} launch video`,
+              description: `A ${Math.round(v.seconds)}-second launch video for ${p.title}: ${p.description}`,
+              thumbnailUrl: abs(v.poster),
+              contentUrl: abs(v.src),
+              duration: `PT${Math.round(v.seconds)}S`,
+              uploadDate: "2026-10-08",
+              width: v.width,
+              height: v.height,
+              inLanguage: "en",
+              author: { "@id": personId },
+              isPartOf: { "@id": `${url}#work` },
+            },
+          ]
+        : []),
       {
         "@type": "BreadcrumbList",
         itemListElement: [

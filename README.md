@@ -17,6 +17,7 @@ npm run lint && npm run typecheck && npm run build
 | `achievements.ts` | Selected Signals |
 | `skills.ts` | Stack columns and Capabilities |
 | `experiments.ts` | Lab |
+| `videos.ts` | Launch video per project (files in `public/videos`). Add a slug here after dropping `<slug>.mp4` and `<slug>.jpg` into `public/videos` |
 
 ## Open TODOs (all visible on the site)
 
@@ -27,3 +28,7 @@ npm run lint && npm run typecheck && npm run build
 ## Motion
 
 Primitives in `components/motion/`, constants in `lib/motion/tokens.ts`. Only transform, opacity and clip-path animate. `prefers-reduced-motion` disables the preloader, cursor, page transition and parallax, and everything renders in its final state.
+
+## Launch videos
+
+One 24-second launch video per project, made with the `/brag` skill (Hyperframes). Sources are in `brag-output/<slug>/composition` (git-ignored); the shipped files are `public/videos/<slug>.mp4` and `.jpg`. Music: "Happy Beats / Business Moves" by ende.app, CC BY 4.0, credited next to every video. They load only when play is pressed.

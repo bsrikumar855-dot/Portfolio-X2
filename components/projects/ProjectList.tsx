@@ -3,6 +3,8 @@ import { ImageReveal } from "@/components/motion/ImageReveal";
 import { ProjectHover } from "@/components/motion/ProjectHover";
 import { RevealText } from "@/components/motion/RevealText";
 import { ProjectVisual } from "@/components/ui/ProjectVisual";
+import { VideoBadge } from "@/components/ui/VideoBadge";
+import { getVideo } from "@/data/videos";
 import type { Project } from "@/data/projects";
 
 type Props = { items: readonly Project[]; level?: "h2" | "h3" };
@@ -60,6 +62,11 @@ export function ProjectList({ items, level = "h3" }: Props) {
                     {p.status}
                   </span>
                 </div>
+                {getVideo(p.slug) && (
+                  <div className="col-span-2 md:col-span-3 lg:col-span-1">
+                    <VideoBadge duration={getVideo(p.slug)!.duration} />
+                  </div>
+                )}
                 <div className="col-span-2 flex items-center gap-2 !text-ink md:col-span-3 lg:col-span-1 lg:pt-4">
                   <span className="border-b border-current pb-1">VIEW CASE STUDY</span>
                   <ArrowUpRight
